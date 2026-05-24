@@ -50,6 +50,14 @@
 
   let isOpen = false;
 
+  function updateHeroPadding() {
+    const header = document.getElementById('site-header');
+    const hero = document.querySelector('.hero');
+    if (header && hero) {
+      hero.style.paddingTop = header.offsetHeight + 'px';
+    }
+  }
+
   function toggle() {
     isOpen = !isOpen;
     burger.classList.toggle('open', isOpen);
@@ -57,7 +65,10 @@
     mobileNav.setAttribute('aria-hidden', String(!isOpen));
     burger.setAttribute('aria-expanded', String(isOpen));
     document.body.style.overflow = isOpen ? 'hidden' : '';
+    setTimeout(updateHeroPadding, 50);
   }
+
+  window.addEventListener('resize', updateHeroPadding);
 
   burger.addEventListener('click', toggle);
 
