@@ -758,10 +758,18 @@
 
   async function closeCurrentChat() {
     if (!currentSessionId) return;
-    await fetch(`${SUPABASE_URL}/rest/v1/chat_sessions?id=eq.${currentSessionId}`, { method: 'PATCH', headers: chatHeaders, body: JSON.stringify({ status: 'closed' }) });
+    if (!confirm('Закрыть и удалить это обращение?')) return;
+    const sid = currentSessionId;
+    // Удаляем сообщения, потом сессию
+    await fetch(`${SUPABASE_URL}/rest/v1/chat_messages?session_id=eq.${sid}`, { method: 'DELETE', headers: chatHeaders });
+    await fetch(`${SUPABASE_URL}/rest/v1/chat_sessions?id=eq.${sid}`, { method: 'DELETE', headers: chatHeaders });
+    // Сбрасываем окно чата
+    currentSessionId = null;
+    if (chatPollInterval) { clearInterval(chatPollInterval); chatPollInterval = null; }
     document.getElementById('close-chat-btn').style.display = 'none';
     document.getElementById('admin-reply-area').style.display = 'none';
-    document.getElementById('chat-header-title').textContent += ' — закрыт';
+    document.getElementById('chat-header-title').textContent = 'Выберите обращение';
+    document.getElementById('admin-messages').innerHTML = '<p style="color:#aaa;text-align:center;margin:auto;font-size:0.85rem">Выберите чат</p>';
     loadChats();
   }
 
