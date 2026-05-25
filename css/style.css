@@ -2983,3 +2983,13 @@ input, button { font-family: inherit; }
   position: relative;
   z-index: 2;
 }
+
+/* ── Back-to-top mobile position (override) ── */
+@media (max-width: 768px) {
+  .back-to-top {
+    bottom: 1rem;
+    right: calc(1rem + 48px + 0.75rem);
+    width: 48px;
+    height: 48px;
+  }
+}
