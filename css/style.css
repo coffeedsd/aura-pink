@@ -1,26 +1,26 @@
 /* ═══════════════════════════════════════════════════════
    AURA PINK — Design System
    Quiet Luxury Aesthetic
-   Fonts: Gilda Display (display) + Nunito Sans (body)
+   Fonts: Playfair Display (display) + Nunito Sans (body)
    ═══════════════════════════════════════════════════════ */
 
 /* ── 1. TOKENS ──────────────────────────────────────── */
 :root {
-  /* Color Palette — Warm Neutral + Dusty Rose */
-  --color-cream:       #FAF7F2;
-  --color-cream-dark:  #F2EDE5;
-  --color-parchment:   #E8E0D4;
-  --color-warm-100:    #D9CFC2;
-  --color-warm-200:    #B8A99A;
-  --color-warm-400:    #8A7869;
-  --color-warm-600:    #5C4D41;
-  --color-ink:         #2A2118;
-  --color-ink-soft:    #473A30;
+  /* Color Palette — Soft Pink */
+  --color-cream:       #FFF1F5;
+  --color-cream-dark:  #FFDEE8;
+  --color-parchment:   #FFC9D8;
+  --color-warm-100:    #FFB7CC;
+  --color-warm-200:    #F4A0B8;
+  --color-warm-400:    #C4708A;
+  --color-warm-600:    #8A4060;
+  --color-ink:         #3A1828;
+  --color-ink-soft:    #5C2840;
 
-  /* Accent — Dusty Rose */
-  --color-rose:        #C4927A;
-  --color-rose-light:  #E8C4B4;
-  --color-rose-deep:   #A07060;
+  /* Accent — Deep Rose Pink */
+  --color-rose:        #D4708A;
+  --color-rose-light:  #FFC9D8;
+  --color-rose-deep:   #B05070;
 
   /* Semantic */
   --color-bg:          var(--color-cream);
@@ -32,7 +32,7 @@
   --color-accent:      var(--color-rose);
 
   /* Typography */
-  --font-display: 'Gilda Display', 'Georgia', serif;
+  --font-display: 'Playfair Display', 'Georgia', serif;
   --font-body:    'Nunito Sans', sans-serif;
 
   /* Type Scale — fluid */
@@ -239,6 +239,11 @@ input, button { font-family: inherit; }
 [data-delay="3"] { transition-delay: 240ms; }
 
 /* ── 7. HEADER ──────────────────────────────────────── */
+/* ── Header wrap (sticky container) ── */
+.header-wrap {
+  display: contents;
+}
+
 .site-header {
   position: fixed;
   top: 0;
@@ -362,71 +367,66 @@ input, button { font-family: inherit; }
 .burger {
   display: none;
   flex-direction: column;
-  gap: 5px;
-  width: 24px;
-  padding: var(--space-2);
-  position: absolute;
-  right: var(--container-pad);
-  top: 50%;
-  transform: translateY(-50%);
+  gap: 6px;
+  width: 32px;
+  height: 32px;
+  padding: 4px;
+  justify-content: center;
+  cursor: pointer;
+  background: none;
+  border: none;
 }
 .burger span {
   display: block;
   width: 100%;
-  height: 1.5px;
+  height: 2px;
   background: var(--color-ink);
   transition: transform var(--t-base) var(--ease-out), opacity var(--t-base) var(--ease-out);
   transform-origin: center;
 }
-.burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.burger.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
 .burger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-.burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+.burger.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
 .mobile-nav {
-  display: none;
+  display: flex;
   flex-direction: column;
-  padding: var(--space-6) var(--container-pad) var(--space-8);
-  background: color-mix(in srgb, var(--color-cream) 97%, transparent);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--color-border);
-  gap: var(--space-4);
-  overflow: hidden;
-  max-height: 0;
-  padding-top: 0;
-  padding-bottom: 0;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
   position: fixed;
-  top: var(--header-h);
-  left: 0;
-  right: 0;
+  inset: 0;
   z-index: 99;
-  transition: max-height var(--t-slow) var(--ease-out), padding var(--t-slow) var(--ease-out);
+  background: var(--color-cream);
+  transform: translateX(100%);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .mobile-nav.open {
-  max-height: 400px;
-  padding-top: var(--space-6);
-  padding-bottom: var(--space-8);
+  transform: translateX(0);
 }
 
 .mobile-nav-link {
-  font-size: var(--text-md);
+  font-size: 2rem;
   font-family: var(--font-display);
   color: var(--color-ink);
-  padding-block: var(--space-2);
-  border-bottom: 1px solid var(--color-border);
+  letter-spacing: 0.04em;
   opacity: 0;
-  transform: translateX(-8px);
+  transform: translateY(12px);
   transition:
     opacity var(--t-base) var(--ease-out),
-    transform var(--t-base) var(--ease-out);
+    transform var(--t-base) var(--ease-out),
+    color var(--t-base) var(--ease-out);
 }
+.mobile-nav-link:hover { color: var(--color-rose-deep); }
 .mobile-nav.open .mobile-nav-link {
   opacity: 1;
-  transform: translateX(0);
+  transform: translateY(0);
 }
-.mobile-nav.open .mobile-nav-link:nth-child(1) { transition-delay: 60ms; }
-.mobile-nav.open .mobile-nav-link:nth-child(2) { transition-delay: 110ms; }
-.mobile-nav.open .mobile-nav-link:nth-child(3) { transition-delay: 160ms; }
+.mobile-nav.open .mobile-nav-link:nth-child(1) { transition-delay: 80ms; }
+.mobile-nav.open .mobile-nav-link:nth-child(2) { transition-delay: 140ms; }
+.mobile-nav.open .mobile-nav-link:nth-child(3) { transition-delay: 200ms; }
+.mobile-nav.open .mobile-nav-link:nth-child(4) { transition-delay: 260ms; }
+.mobile-nav.open .mobile-nav-link:nth-child(5) { transition-delay: 320ms; }
 
 /* ── 8. HERO ────────────────────────────────────────── */
 .hero {
@@ -1821,8 +1821,16 @@ input, button { font-family: inherit; }
 @media (max-width: 768px) {
   .nav-left, .nav-right .nav-link { display: none; }
   .burger { display: flex; }
-  .mobile-nav { display: flex; }
+  /* mobile-nav always flex via base styles */
   .header-inner { grid-template-columns: auto 1fr auto; }
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .nav-right .burger {
+    display: flex;
+  }
 
   .hero-deco--1 { display: none; }
 
@@ -2016,6 +2024,7 @@ input, button { font-family: inherit; }
   flex-direction: column;
   align-items: flex-end;
   gap: var(--space-4);
+  pointer-events: none;
 }
 
 /* FAB кнопка */
@@ -2036,6 +2045,7 @@ input, button { font-family: inherit; }
   position: relative;
   flex-shrink: 0;
   animation: fabPulse 3s ease-in-out infinite;
+  pointer-events: auto;
 }
 .support-fab:hover {
   background: var(--color-ink-soft);
@@ -2725,6 +2735,9 @@ input, button { font-family: inherit; }
   }
   .perk { padding: 1.25rem; flex-direction: row; gap: 1rem; align-items: flex-start; }
   .perk-icon { flex-shrink: 0; margin-top: 2px; }
+  .perk-content { min-width: 0; flex: 1; }
+  .perk-title { font-size: 1rem; }
+  .perk-text { font-size: 0.85rem; word-break: normal; overflow-wrap: break-word; }
 
   /* ── Подписка ───────────────────────────────────── */
   .subscribe {
@@ -2909,28 +2922,27 @@ input, button { font-family: inherit; }
 /* ── BACK TO TOP ────────────────────────────────────── */
 .back-to-top {
   position: fixed;
-  bottom: calc(var(--space-6) + 68px);
-  right: calc(var(--space-6) + 6px);
-  width: 54px;
-  height: 54px;
+  bottom: calc(var(--space-8) + 56px + var(--space-4));
+  right: var(--space-8);
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
-  background: var(--color-cream);
-  color: var(--color-ink);
-  border: 1.5px solid var(--color-border);
+  background: #ffffff;
+  color: #1a1209;
+  border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 20px rgba(42,33,24,.15);
+  box-shadow: 0 4px 20px rgba(42,33,24,.2);
   opacity: 0;
   visibility: hidden;
+  pointer-events: none;
   transform: translateY(16px);
   transition: opacity .3s ease,
               visibility .3s ease,
               transform .3s ease,
               background .2s,
-              color .2s,
-              border-color .2s,
               box-shadow .2s;
   z-index: 900;
 }
@@ -2938,17 +2950,28 @@ input, button { font-family: inherit; }
 .back-to-top.visible {
   opacity: 1;
   visibility: visible;
+  pointer-events: auto;
   transform: translateY(0);
 }
 
 .back-to-top:hover {
-  background: var(--color-ink);
-  color: var(--color-cream);
-  border-color: var(--color-ink);
+  background: var(--color-ink-soft);
   transform: translateY(-4px);
-  box-shadow: 0 8px 28px rgba(42,33,24,.25);
+  box-shadow: 0 8px 28px rgba(42,33,24,.35);
 }
 
 .back-to-top:active {
   transform: translateY(-2px);
+}
+
+/* ── Mobile fixes ── */
+
+/* ── Footer links fix ── */
+.site-footer {
+  position: relative;
+  z-index: 1;
+}
+.footer-bottom {
+  position: relative;
+  z-index: 2;
 }

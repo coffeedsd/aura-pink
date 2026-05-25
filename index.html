@@ -16,13 +16,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Aura Pink — Женская одежда</title>
-  <meta name="theme-color" content="#FAF7F2" />
+  <meta name="theme-color" content="#FFF1F5" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="description" content="Aura Pink — магазин женской одежды. Тихая роскошь, натуральные ткани, безупречный крой." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -65,21 +65,22 @@
           </span>
           <span class="cart-count" id="cart-count" aria-live="polite">0</span>
         </button>
+
+        <button class="burger" aria-label="Меню" id="burger">
+          <span></span><span></span><span></span>
+        </button>
       </nav>
     </div>
-
-    <button class="burger" aria-label="Меню" id="burger">
-      <span></span><span></span><span></span>
-    </button>
-
-    <div class="mobile-nav" id="mobile-nav" aria-hidden="true">
-      <a href="catalog.html" class="mobile-nav-link">Каталог</a>
-      <a href="#about" class="mobile-nav-link">О марке</a>
-      <a href="#lookbook" class="mobile-nav-link">Lookbook</a>
-      <a href="delivery.html" class="mobile-nav-link">Доставка</a>
-      <a href="contacts.html" class="mobile-nav-link">Контакты</a>
-    </div>
   </header>
+
+  <div class="mobile-nav" id="mobile-nav" aria-hidden="true">
+    <a href="catalog.html" class="mobile-nav-link">Каталог</a>
+    <a href="#about" class="mobile-nav-link">О марке</a>
+    <a href="#lookbook" class="mobile-nav-link">Lookbook</a>
+    <a href="delivery.html" class="mobile-nav-link">Доставка</a>
+    <a href="contacts.html" class="mobile-nav-link">Контакты</a>
+  </div>
+  </div><!-- /.mobile-nav -->
 
 
   <!-- ─── ПОИСК ───────────────────────────────────────────── -->
@@ -292,24 +293,30 @@
           <div class="perk-icon">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           </div>
+          <div class="perk-content">
           <h4 class="perk-title">Безопасная оплата</h4>
           <p class="perk-text">ЮKassa · Карты · СБП · Рассрочка</p>
+          </div>
         </div>
 
         <div class="perk reveal" data-delay="1">
           <div class="perk-icon">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
           </div>
+          <div class="perk-content">
           <h4 class="perk-title">Персональный стилист</h4>
           <p class="perk-text">Консультация по подбору образа — бесплатно</p>
+          </div>
         </div>
 
         <div class="perk perk--support reveal" data-delay="2" id="perk-support" role="button" tabindex="0" aria-label="Открыть чат поддержки">
           <div class="perk-icon">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
           </div>
+          <div class="perk-content">
           <h4 class="perk-title">Поддержка</h4>
           <p class="perk-text">Ответим на любой вопрос — нажмите, чтобы написать нам</p>
+          </div>
           <span class="perk-cta">Написать →</span>
         </div>
 
@@ -373,7 +380,7 @@
 <!-- ─── ФУТЕР ─────────────────────────────────────────── -->
   <!-- ─── КНОПКА НАВЕРХ ────────────────────────────────── -->
   <button class="back-to-top" id="back-to-top" aria-label="Наверх">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
   </button>
 
   <footer class="site-footer" aria-label="Подвал сайта">
@@ -590,7 +597,7 @@
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
       </span>
       <span class="support-fab-icon support-fab-icon--close">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </span>
       <span class="support-fab-badge" id="support-badge" aria-hidden="true">1</span>
     </button>

@@ -18,7 +18,7 @@
   <title>Публичная оферта — Aura Pink</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
   <style>
     .oferta-page {
@@ -135,15 +135,17 @@
           <span class="cart-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></span>
           <span class="cart-count" id="cart-count">0</span>
         </button>
+        <button class="burger" aria-label="Меню" id="burger"><span></span><span></span><span></span></button>
       </nav>
     </div>
-    <button class="burger" aria-label="Меню" id="burger"><span></span><span></span><span></span></button>
-    <div class="mobile-nav" id="mobile-nav" aria-hidden="true">
+
+  </header>
+
+  <div class="mobile-nav" id="mobile-nav" aria-hidden="true">
       <a href="catalog.html" class="mobile-nav-link">Каталог</a>
       <a href="delivery.html" class="mobile-nav-link">Доставка</a>
       <a href="contacts.html" class="mobile-nav-link">Контакты</a>
     </div>
-  </header>
 
   <main>
     <div class="oferta-page">
@@ -163,7 +165,7 @@
   </main>
   <!-- ─── КНОПКА НАВЕРХ ────────────────────────────────── -->
   <button class="back-to-top" id="back-to-top" aria-label="Наверх">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
   </button>
 
   <footer class="site-footer">
@@ -203,6 +205,26 @@
       }, { passive: true });
       _btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     }
+  </script>
+  <script>
+    // Burger menu
+    (function() {
+      const burger = document.getElementById('burger');
+      const mobileNav = document.getElementById('mobile-nav');
+      if (!burger || !mobileNav) return;
+      let isOpen = false;
+      function toggle() {
+        isOpen = !isOpen;
+        burger.classList.toggle('open', isOpen);
+        mobileNav.classList.toggle('open', isOpen);
+        mobileNav.setAttribute('aria-hidden', String(!isOpen));
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      }
+      burger.addEventListener('click', toggle);
+      mobileNav.querySelectorAll('.mobile-nav-link').forEach(link => {
+        link.addEventListener('click', () => { if (isOpen) toggle(); });
+      });
+    })();
   </script>
 </body>
 </html>
