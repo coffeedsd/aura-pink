@@ -2773,8 +2773,10 @@ input, button { font-family: inherit; }
     right: 1rem;
   }
   .back-to-top {
-    bottom: calc(1rem + 48px + 0.75rem);
+    bottom: calc(1rem + 48px + 0.5rem);
     right: 1rem;
+    width: 48px;
+    height: 48px;
   }
   .support-chat {
     width: calc(100vw - 2rem);
