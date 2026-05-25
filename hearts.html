@@ -1,0 +1,74 @@
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+.stage {
+  width: 100%;
+  height: 520px;
+  background: #FFF1F5;
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+}
+.heart {
+  position: absolute;
+  opacity: 0;
+  animation: floatUp linear infinite;
+}
+.heart svg { display: block; }
+@keyframes floatUp {
+  0%   { transform: translateY(0) rotate(var(--r)) scale(1); opacity: 0; }
+  10%  { opacity: var(--o); }
+  85%  { opacity: var(--o); }
+  100% { transform: translateY(-540px) rotate(calc(var(--r) + 20deg)) scale(1.1); opacity: 0; }
+}
+</style>
+
+<div class="stage" id="stage"></div>
+
+<script>
+const stage = document.getElementById('stage');
+const pinks = ['#FFB7CC','#FFC9D8','#FFDEE8','#FFF1F5','#F4A0BC','#E8849E','#FFD6E5'];
+
+function makeHeart(size, color) {
+  const s = document.createElementNS('http://www.w3.org/2000/svg','svg');
+  s.setAttribute('width', size);
+  s.setAttribute('height', size);
+  s.setAttribute('viewBox','0 0 100 100');
+  const p = document.createElementNS('http://www.w3.org/2000/svg','path');
+  p.setAttribute('d','M50 85 C50 85 10 58 10 33 C10 18 22 8 35 8 C42 8 48 12 50 16 C52 12 58 8 65 8 C78 8 90 18 90 33 C90 58 50 85 50 85Z');
+  p.setAttribute('fill', color);
+  p.setAttribute('stroke', color === '#FFF1F5' ? '#FFDEE8' : 'none');
+  p.setAttribute('stroke-width', '2');
+  s.appendChild(p);
+  return s;
+}
+
+function spawnHeart() {
+  const size = 24 + Math.random() * 120;
+  const color = pinks[Math.floor(Math.random() * pinks.length)];
+  const div = document.createElement('div');
+  div.className = 'heart';
+
+  const left = Math.random() * 90;
+  const dur = 4 + Math.random() * 7;
+  const delay = Math.random() * -10;
+  const rot = (Math.random() - 0.5) * 30;
+  const opacity = 0.25 + Math.random() * 0.65;
+
+  div.style.cssText = `
+    left: ${left}%;
+    bottom: -${size}px;
+    --r: ${rot}deg;
+    --o: ${opacity};
+    animation-duration: ${dur}s;
+    animation-delay: ${delay}s;
+  `;
+
+  div.appendChild(makeHeart(size, color));
+  stage.appendChild(div);
+
+  setTimeout(() => div.remove(), (dur + Math.abs(delay) + 1) * 1000);
+}
+
+for (let i = 0; i < 30; i++) spawnHeart();
+setInterval(spawnHeart, 400);
+</script>
