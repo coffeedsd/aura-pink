@@ -2952,6 +2952,15 @@ input, button { font-family: inherit; }
   z-index: 900;
 }
 
+@media (max-width: 768px) {
+  .back-to-top {
+    bottom: calc(1rem + 48px + 0.75rem) !important;
+    right: 1rem !important;
+    width: 48px !important;
+    height: 48px !important;
+  }
+}
+
 .back-to-top.visible {
   opacity: 1;
   visibility: visible;
@@ -2982,12 +2991,4 @@ input, button { font-family: inherit; }
   z-index: 2;
 }
 
-/* ── Back-to-top mobile position (override) ── */
-@media (max-width: 768px) {
-  .back-to-top {
-    bottom: calc(1rem + 48px + 0.75rem);
-    right: 1rem;
-    width: 48px;
-    height: 48px;
-  }
-}
+
