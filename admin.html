@@ -323,7 +323,14 @@
       </div>
       <div class="chats-layout">
         <div class="chats-sessions">
-          <div class="chats-sessions-header">Обращения</div>
+          <div class="chats-sessions-header" style="display:flex;align-items:center;justify-content:space-between;">
+            <span>Обращения</span>
+            <button id="select-mode-btn" onclick="toggleSelectMode()" style="background:none;border:1px solid var(--border);border-radius:4px;padding:0.25rem 0.6rem;font-size:0.72rem;font-family:var(--font-body);cursor:pointer;color:var(--warm-400);">Выбрать</button>
+          </div>
+          <div id="bulk-delete-bar" style="display:none;padding:0.6rem 1rem;background:#fee2e2;border-bottom:1px solid #fca5a5;align-items:center;justify-content:space-between;gap:0.5rem;">
+            <span id="selected-count" style="font-size:0.8rem;color:#b91c1c;font-weight:600;">0 выбрано</span>
+            <button onclick="deleteSelected()" style="background:#b91c1c;color:#fff;border:none;padding:0.3rem 0.85rem;border-radius:4px;font-size:0.78rem;cursor:pointer;font-family:var(--font-body);">Удалить выбранные</button>
+          </div>
           <div id="chat-sessions-list"></div>
         </div>
         <div class="chats-window">
@@ -674,6 +681,43 @@
 
   // CHATS
   let currentSessionId = null, chatPollInterval = null, lastAdminMsgTime = null, chatListInterval = null;
+  let selectMode = false, selectedIds = new Set();
+
+  function toggleSelectMode() {
+    selectMode = !selectMode;
+    selectedIds.clear();
+    const btn = document.getElementById('select-mode-btn');
+    const bar = document.getElementById('bulk-delete-bar');
+    btn.textContent = selectMode ? 'Отмена' : 'Выбрать';
+    btn.style.color = selectMode ? '#b91c1c' : '';
+    btn.style.borderColor = selectMode ? '#fca5a5' : '';
+    bar.style.display = selectMode ? 'flex' : 'none';
+    updateSelectedCount();
+    loadChats();
+  }
+
+  function updateSelectedCount() {
+    document.getElementById('selected-count').textContent = `${selectedIds.size} выбрано`;
+  }
+
+  async function deleteSelected() {
+    if (!selectedIds.size) return;
+    if (!confirm(`Удалить ${selectedIds.size} обращений?`)) return;
+    for (const sid of selectedIds) {
+      await fetch(`${SUPABASE_URL}/rest/v1/chat_messages?session_id=eq.${sid}`, { method: 'DELETE', headers: chatHeaders });
+      await fetch(`${SUPABASE_URL}/rest/v1/chat_sessions?id=eq.${sid}`, { method: 'DELETE', headers: chatHeaders });
+      if (currentSessionId === sid) {
+        currentSessionId = null;
+        if (chatPollInterval) { clearInterval(chatPollInterval); chatPollInterval = null; }
+        document.getElementById('chat-header-title').textContent = 'Выберите обращение';
+        document.getElementById('admin-messages').innerHTML = '<p style="color:#aaa;text-align:center;margin:auto;font-size:0.85rem">Выберите чат</p>';
+        document.getElementById('close-chat-btn').style.display = 'none';
+        document.getElementById('admin-reply-area').style.display = 'none';
+      }
+    }
+    selectedIds.clear();
+    toggleSelectMode();
+  }
 
   async function loadChats() {
     try {
@@ -686,12 +730,37 @@
       list.innerHTML = sessions.length === 0 ? '<p style="padding:1rem;color:#aaa;font-size:0.82rem;">Нет обращений</p>' : '';
       sessions.forEach(s => {
         const clientNum = s.client_id.replace('client_', '#').slice(0, 12);
+        const isSelected = selectedIds.has(s.id);
         const div = document.createElement('div');
-        div.style.cssText = `padding:0.75rem 1rem;cursor:pointer;border-bottom:1px solid var(--border);transition:background 0.15s;${currentSessionId === s.id ? 'background:#f5f0eb;' : ''}`;
-        div.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.2rem;"><span style="font-weight:600;font-size:0.82rem;">Клиент ${clientNum}</span><span style="font-size:0.68rem;padding:2px 7px;border-radius:999px;background:${s.status==='open'?'#dcfce7':'#f1f5f9'};color:${s.status==='open'?'#166534':'#64748b'};">${s.status==='open'?'Открыт':'Закрыт'}</span></div><p style="font-size:0.78rem;color:#888;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${s.last_message||'Нет сообщений'}</p>`;
-        div.onmouseenter = () => { if (currentSessionId !== s.id) div.style.background = '#faf8f6'; };
-        div.onmouseleave = () => { if (currentSessionId !== s.id) div.style.background = ''; };
-        div.onclick = () => openChat(s);
+        div.style.cssText = `padding:0.75rem 1rem;cursor:pointer;border-bottom:1px solid var(--border);transition:background 0.15s;display:flex;align-items:flex-start;gap:0.6rem;${currentSessionId === s.id ? 'background:#f5f0eb;' : ''}${isSelected ? 'background:#fee2e2;' : ''}`;
+
+        if (selectMode) {
+          const cb = document.createElement('input');
+          cb.type = 'checkbox'; cb.checked = isSelected;
+          cb.style.cssText = 'margin-top:3px;flex-shrink:0;accent-color:#b91c1c;width:15px;height:15px;';
+          cb.onchange = () => {
+            if (cb.checked) selectedIds.add(s.id); else selectedIds.delete(s.id);
+            div.style.background = cb.checked ? '#fee2e2' : '';
+            updateSelectedCount();
+          };
+          div.appendChild(cb);
+        }
+
+        const info = document.createElement('div');
+        info.style.cssText = 'flex:1;min-width:0;';
+        info.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.2rem;"><span style="font-weight:600;font-size:0.82rem;">Клиент ${clientNum}</span><span style="font-size:0.68rem;padding:2px 7px;border-radius:999px;background:${s.status==='open'?'#dcfce7':'#f1f5f9'};color:${s.status==='open'?'#166534':'#64748b'};">${s.status==='open'?'Открыт':'Закрыт'}</span></div><p style="font-size:0.78rem;color:#888;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${s.last_message||'Нет сообщений'}</p>`;
+        div.appendChild(info);
+
+        if (!selectMode) {
+          div.onmouseenter = () => { if (currentSessionId !== s.id) div.style.background = '#faf8f6'; };
+          div.onmouseleave = () => { if (currentSessionId !== s.id) div.style.background = ''; };
+          div.onclick = () => openChat(s);
+        } else {
+          div.onclick = () => {
+            const cb = div.querySelector('input[type=checkbox]');
+            cb.checked = !cb.checked; cb.dispatchEvent(new Event('change'));
+          };
+        }
         list.appendChild(div);
       });
     } catch(e) { console.error('loadChats error', e); }
