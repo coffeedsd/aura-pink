@@ -569,6 +569,22 @@ input, button { font-family: inherit; }
   50% { transform: translateY(-12px); }
 }
 
+.hero-hearts {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+  overflow: hidden;
+}
+
+.hero-heart {
+  position: absolute;
+  font-family: var(--font-display);
+  color: var(--color-parchment);
+  line-height: 1;
+}
+
 /* ── 9. CATEGORIES ──────────────────────────────────── */
 .categories-grid {
   display: grid;
