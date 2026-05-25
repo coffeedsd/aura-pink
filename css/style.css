@@ -2772,6 +2772,10 @@ input, button { font-family: inherit; }
     bottom: 1rem;
     right: 1rem;
   }
+  .back-to-top {
+    bottom: calc(1rem + 48px + 0.75rem);
+    right: 1rem;
+  }
   .support-chat {
     width: calc(100vw - 2rem);
     max-height: 70svh;
@@ -2926,6 +2930,7 @@ input, button { font-family: inherit; }
   right: var(--space-8);
   width: 56px;
   height: 56px;
+  margin-right: 0;
   border-radius: 50%;
   background: #ffffff;
   color: #1a1209;
