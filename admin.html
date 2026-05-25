@@ -628,7 +628,8 @@
       document.getElementById(`${t}-section`).style.display = t === tab ? 'block' : 'none';
     });
     if (tab === 'images') loadSiteImages();
-    if (tab === 'chats') loadChats();
+    if (tab === 'chats') { loadChats(); chatListInterval = setInterval(loadChats, 5000); }
+    else { if (chatListInterval) { clearInterval(chatListInterval); chatListInterval = null; } }
   }
 
   // SITE IMAGES
@@ -672,7 +673,7 @@
   });
 
   // CHATS
-  let currentSessionId = null, chatPollInterval = null, lastAdminMsgTime = null;
+  let currentSessionId = null, chatPollInterval = null, lastAdminMsgTime = null, chatListInterval = null;
 
   async function loadChats() {
     try {
