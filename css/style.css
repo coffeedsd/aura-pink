@@ -280,7 +280,7 @@ input, button { font-family: inherit; }
   align-items: center;
   gap: var(--space-8);
 }
-.nav-right { justify-content: flex-end; align-items: center; gap: var(--space-1); }
+.nav-right { justify-content: flex-end; align-items: center; gap: var(--space-6); }
 
 .nav-link {
   font-size: var(--text-xs);
