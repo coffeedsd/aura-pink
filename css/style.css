@@ -1260,7 +1260,7 @@ input, button { font-family: inherit; }
 
 .footer-tagline {
   font-size: var(--text-sm);
-  color: var(--color-ink);
+  color: var(--color-cream);
   font-style: normal;
 }
 
@@ -1278,16 +1278,15 @@ input, button { font-family: inherit; }
   font-weight: 600;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--color-warm-200);
-  margin-bottom: var(--space-2);
+  color: var(--color-cream);
 }
 
 .footer-link {
   font-size: var(--text-sm);
-  color: var(--color-warm-100);
+  color: var(--color-cream);
   transition: color var(--t-fast) var(--ease-out);
 }
-.footer-link:hover { color: var(--color-ink); }
+.footer-link:hover { color: var(--color-cream-dark); }
 
 .footer-bottom {
   display: flex;
@@ -1299,17 +1298,17 @@ input, button { font-family: inherit; }
 
 .footer-copy {
   font-size: var(--text-xs);
-  color: var(--color-warm-400);
+  color: var(--color-cream);
 }
 
 .footer-legal { display: flex; gap: var(--space-6); }
 
 .footer-link-sm {
   font-size: var(--text-xs);
-  color: var(--color-warm-400);
+  color: var(--color-cream);
   transition: color var(--t-fast) var(--ease-out);
 }
-.footer-link-sm:hover { color: var(--color-ink); }
+.footer-link-sm:hover { color: var(--color-cream-dark); }
 
 .footer-pay-icons { display: flex; gap: var(--space-2); }
 
