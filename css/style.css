@@ -2939,7 +2939,7 @@ input, button { font-family: inherit; }
 .delivery-strip-link {
   text-decoration: none;
   opacity: 1;
-  color: var(--color-ink);
+  color: var(--color-cream);
   transition: opacity var(--t-fast);
 }
 
