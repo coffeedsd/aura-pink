@@ -1863,71 +1863,67 @@ input, button { font-family: inherit; }
    Row 1 (52px): [logo центр] [иконки справа]
    Row 2 (36px): [все 5 ссылок по центру]
    ───────────────────────────────────────────────────── */
-@media (min-width: 769px) and (max-width: 1050px) {
-  :root { --header-h: 88px; }
-
-  .header-inner {
-    padding-inline: 1.5rem;
-    height: var(--header-h);
-    display: grid;
-    grid-template-rows: 52px 36px;
-    grid-template-columns: 1fr auto;
-    grid-template-areas:
-      "logo  icons"
-      "links links";
-    align-items: center;
-  }
-
-  /* Строка 1 — логотип */
-  .logo {
-    grid-area: logo;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .logo-text { font-size: 1.65rem; }
-
-  /* Строка 1 — иконки справа */
-  .nav-right {
-    grid-area: icons;
-    display: flex;
-    align-items: center;
-    gap: 2px;
-    position: static;
-  }
-  .nav-right .nav-link  { display: none !important; }
-  .burger               { display: none !important; }
-  .nav-icon-btn         { width: 30px; height: 30px; }
-
-  /* Строка 2 — все ссылки: nav-left содержит обе левые + .nav-link--medium */
-  .nav-left {
-    grid-area: links;
-    display: flex !important;
-    justify-content: center;
-    align-items: center;
-    gap: 0;
-    border-top: 1px solid var(--color-border);
-    height: 36px;
-  }
-
-  .nav-left .nav-link {
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--color-text-soft);
-    padding: 0 0.85rem;
-    white-space: nowrap;
-    position: relative;
-    transition: color var(--t-base) var(--ease-out);
-  }
-
-  .nav-left .nav-link:hover { color: var(--color-ink); }
-
-  /* По умолчанию nav-link--medium скрыты (на десктопе дублируются в nav-right) */
+/* ── Двухрядный хедер — активируется JS-классом .header-two-row ── */
+.site-header.header-two-row {
+  --header-h: 88px;
+  height: var(--header-h);
 }
 
-/* На широком десктопе скрываем дубли в nav-left */
+.site-header.header-two-row .header-inner {
+  padding-inline: 1.5rem;
+  height: var(--header-h);
+  display: grid;
+  grid-template-rows: 52px 36px;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "logo  icons"
+    "links links";
+  align-items: center;
+}
+
+.site-header.header-two-row .logo {
+  grid-area: logo;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.site-header.header-two-row .logo-text { font-size: 1.65rem; }
+
+.site-header.header-two-row .nav-right {
+  grid-area: icons;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  position: static;
+}
+.site-header.header-two-row .nav-right .nav-link { display: none !important; }
+.site-header.header-two-row .burger              { display: none !important; }
+.site-header.header-two-row .nav-icon-btn        { width: 30px; height: 30px; }
+
+.site-header.header-two-row .nav-left {
+  grid-area: links;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  border-top: 1px solid var(--color-border);
+  height: 36px;
+}
+
+.site-header.header-two-row .nav-left .nav-link {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-soft);
+  padding: 0 0.85rem;
+  white-space: nowrap;
+  position: relative;
+  transition: color var(--t-base) var(--ease-out);
+}
+.site-header.header-two-row .nav-left .nav-link:hover { color: var(--color-ink); }
+
+/* На десктопе скрываем дублированные ссылки в nav-left */
 @media (min-width: 1051px) {
   .nav-link--medium { display: none !important; }
 }

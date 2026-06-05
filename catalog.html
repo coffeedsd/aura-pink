@@ -616,5 +616,28 @@
       _btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     }
   </script>
+
+  <script>
+    /* ── Header layout switcher ──────────────────────────
+       В режиме ПК на телефоне (viewport ~980px) переключаем
+       хедер на двухрядный макет через JS-класс.
+       Порог 769–1050px определён по реальному innerWidth.
+    ─────────────────────────────────────────────────────── */
+    (function() {
+      var header = document.getElementById('site-header');
+      function checkLayout() {
+        var w = window.innerWidth;
+        if (w >= 769 && w <= 1050) {
+          header.classList.add('header-two-row');
+          document.documentElement.style.setProperty('--header-h', '88px');
+        } else {
+          header.classList.remove('header-two-row');
+          document.documentElement.style.removeProperty('--header-h');
+        }
+      }
+      checkLayout();
+      window.addEventListener('resize', checkLayout);
+    })();
+  </script>
 </body>
 </html>
