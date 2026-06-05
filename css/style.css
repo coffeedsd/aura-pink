@@ -1848,87 +1848,69 @@ input, button { font-family: inherit; }
 @media (max-width: 1024px) {
   .perks-grid { grid-template-columns: repeat(2, 1fr); }
   .about-inner { gap: var(--space-12); }
-
-  /* Уменьшаем отступы в хедере чтобы всё влезало */
-  .nav-left, .nav-right { gap: var(--space-4); }
-  .nav-right { gap: var(--space-3); }
-  .header-inner { padding-inline: 1.25rem; }
 }
 
-/* ── Base: two-row header hidden by default ── */
-.header-two-row { display: none; }
-.header-one-row { display: contents; }
+/* ════════════════════════════════════════════════════
+   HEADER RESPONSIVE — три состояния:
+   > 900px  → обычный десктоп (nav-left | logo | nav-right)
+   769–900px → "режим ПК" на телефоне: logo сверху по центру,
+               иконки справа, ссылки внизу в ряд
+   ≤ 768px  → мобильный: logo слева, бургер справа
+   ════════════════════════════════════════════════════ */
 
-/* ── Промежуточный breakpoint: десктопный режим на телефоне (769–900px) ── */
+/* ── 769–900px: двухрядный хедер ──────────────────────
+   Grid layout:
+   Row 1 (52px): [logo центр] [иконки справа]
+   Row 2 (36px): [все 5 ссылок по центру]
+   ───────────────────────────────────────────────────── */
 @media (min-width: 769px) and (max-width: 900px) {
   :root { --header-h: 88px; }
 
-  /* Скрываем оригинальный однострочный хедер */
-  .header-one-row { display: none; }
-
-  /* Показываем двухрядный */
-  .header-two-row {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: var(--header-h);
-  }
-
   .header-inner {
-    display: flex;
-    flex-direction: column;
     padding-inline: 1.5rem;
     height: var(--header-h);
-    grid-template-columns: unset;
-    align-items: stretch;
-  }
-
-  /* Верхний ряд: логотип по центру, иконки справа */
-  .header-row-top {
-    display: flex;
+    display: grid;
+    grid-template-rows: 52px 36px;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "logo  icons"
+      "links links";
     align-items: center;
-    justify-content: center;
-    position: relative;
-    height: 52px;
-    flex-shrink: 0;
   }
 
-  .header-row-top .logo {
+  /* Строка 1 — логотип */
+  .logo {
+    grid-area: logo;
     display: flex;
     justify-content: center;
+    align-items: center;
   }
+  .logo-text { font-size: 1.65rem; }
 
-  .header-row-top .logo-text {
-    font-size: 1.7rem;
-  }
-
-  .header-icons {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
+  /* Строка 1 — иконки справа */
+  .nav-right {
+    grid-area: icons;
     display: flex;
     align-items: center;
     gap: 2px;
+    position: static;
   }
+  .nav-right .nav-link  { display: none !important; }
+  .burger               { display: none !important; }
+  .nav-icon-btn         { width: 30px; height: 30px; }
 
-  .header-icons .nav-icon-btn {
-    width: 30px;
-    height: 30px;
-  }
-
-  /* Нижний ряд: все ссылки по центру */
-  .header-row-bottom {
-    display: flex;
-    align-items: center;
+  /* Строка 2 — все ссылки: nav-left содержит обе левые + .nav-link--medium */
+  .nav-left {
+    grid-area: links;
+    display: flex !important;
     justify-content: center;
-    height: 36px;
-    flex-shrink: 0;
-    border-top: 1px solid var(--color-border);
+    align-items: center;
     gap: 0;
+    border-top: 1px solid var(--color-border);
+    height: 36px;
   }
 
-  .header-row-bottom .nav-link {
+  .nav-left .nav-link {
     font-size: 0.7rem;
     font-weight: 600;
     letter-spacing: 0.1em;
@@ -1937,60 +1919,46 @@ input, button { font-family: inherit; }
     padding: 0 0.85rem;
     white-space: nowrap;
     position: relative;
+    transition: color var(--t-base) var(--ease-out);
   }
 
-  .header-row-bottom .nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0.85rem;
-    right: 0.85rem;
-    height: 1px;
-    background: var(--color-rose);
-    width: 0;
-    transition: width var(--t-base) var(--ease-out);
-  }
+  .nav-left .nav-link:hover { color: var(--color-ink); }
 
-  .header-row-bottom .nav-link:hover { color: var(--color-ink); }
-  .header-row-bottom .nav-link:hover::after { width: calc(100% - 1.7rem); }
+  /* По умолчанию nav-link--medium скрыты (на десктопе дублируются в nav-right) */
 }
 
+/* На широком десктопе скрываем дубли в nav-left */
+@media (min-width: 901px) {
+  .nav-link--medium { display: none !important; }
+}
+
+/* ── ≤ 768px: мобильный хедер ── */
 @media (max-width: 768px) {
   .nav-left, .nav-right .nav-link { display: none; }
   .burger { display: flex; }
-  /* mobile-nav always flex via base styles */
   .header-inner { grid-template-columns: auto 1fr auto; }
   .nav-right {
     display: flex;
     align-items: center;
     gap: 4px;
   }
-  .nav-right .burger {
-    display: flex;
-  }
+  .nav-right .burger { display: flex; }
 
   .hero-deco--1 { display: none; }
-
   .categories-grid { grid-template-columns: 1fr; gap: var(--space-3); }
   .category-img { aspect-ratio: 4/3; }
-
   .products-grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-6) var(--space-4); }
-
   .about-inner { grid-template-columns: 1fr; gap: var(--space-8); }
   .about-img-caption { display: none; }
-
   .subscribe-inner { grid-template-columns: 1fr; gap: var(--space-8); }
   .subscribe-input-wrap { flex-direction: column; }
-
   .footer-top { grid-template-columns: 1fr; gap: var(--space-8); }
   .footer-nav { grid-template-columns: repeat(2, 1fr); }
   .footer-bottom { flex-direction: column; align-items: flex-start; }
-
   .modal-panel { grid-template-columns: 1fr; }
   .modal-img-wrap { display: none; }
   .modal-panel--payment { max-width: 100%; }
 }
-
 @media (max-width: 480px) {
   :root { --header-h: 56px; }
   .products-grid { grid-template-columns: 1fr; }
