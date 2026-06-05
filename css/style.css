@@ -1848,6 +1848,20 @@ input, button { font-family: inherit; }
 @media (max-width: 1024px) {
   .perks-grid { grid-template-columns: repeat(2, 1fr); }
   .about-inner { gap: var(--space-12); }
+
+  /* Уменьшаем отступы в хедере чтобы всё влезало */
+  .nav-left, .nav-right { gap: var(--space-4); }
+  .nav-right { gap: var(--space-3); }
+  .header-inner { padding-inline: 1.25rem; }
+}
+
+/* ── Промежуточный breakpoint: десктопный режим на телефоне (~900px) */
+@media (max-width: 900px) {
+  .nav-left { gap: var(--space-3); }
+  .nav-right { gap: var(--space-2); }
+  .nav-link { font-size: 0.7rem; letter-spacing: 0.08em; }
+  .nav-icon-btn { width: 30px; height: 30px; }
+  .logo-text { font-size: 1.25rem; }
 }
 
 @media (max-width: 768px) {
