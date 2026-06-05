@@ -1852,10 +1852,10 @@ input, button { font-family: inherit; }
 
 /* ════════════════════════════════════════════════════
    HEADER RESPONSIVE — три состояния:
-   > 900px  → обычный десктоп (nav-left | logo | nav-right)
-   769–900px → "режим ПК" на телефоне: logo сверху по центру,
-               иконки справа, ссылки внизу в ряд
-   ≤ 768px  → мобильный: logo слева, бургер справа
+   > 1050px  → обычный десктоп (nav-left | logo | nav-right)
+   769–1050px → "режим ПК" на телефоне (~980px): logo сверху,
+                иконки справа, ссылки внизу в ряд
+   ≤ 768px   → мобильный: logo слева, бургер справа
    ════════════════════════════════════════════════════ */
 
 /* ── 769–900px: двухрядный хедер ──────────────────────
@@ -1863,7 +1863,7 @@ input, button { font-family: inherit; }
    Row 1 (52px): [logo центр] [иконки справа]
    Row 2 (36px): [все 5 ссылок по центру]
    ───────────────────────────────────────────────────── */
-@media (min-width: 769px) and (max-width: 900px) {
+@media (min-width: 769px) and (max-width: 1050px) {
   :root { --header-h: 88px; }
 
   .header-inner {
@@ -1928,7 +1928,7 @@ input, button { font-family: inherit; }
 }
 
 /* На широком десктопе скрываем дубли в nav-left */
-@media (min-width: 901px) {
+@media (min-width: 1051px) {
   .nav-link--medium { display: none !important; }
 }
 
