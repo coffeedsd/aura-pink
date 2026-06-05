@@ -1855,13 +1855,104 @@ input, button { font-family: inherit; }
   .header-inner { padding-inline: 1.25rem; }
 }
 
-/* ── Промежуточный breakpoint: десктопный режим на телефоне (~900px) */
-@media (max-width: 900px) {
-  .nav-left { gap: var(--space-3); }
-  .nav-right { gap: var(--space-2); }
-  .nav-link { font-size: 0.7rem; letter-spacing: 0.08em; }
-  .nav-icon-btn { width: 30px; height: 30px; }
-  .logo-text { font-size: 1.25rem; }
+/* ── Base: two-row header hidden by default ── */
+.header-two-row { display: none; }
+.header-one-row { display: contents; }
+
+/* ── Промежуточный breakpoint: десктопный режим на телефоне (769–900px) ── */
+@media (min-width: 769px) and (max-width: 900px) {
+  :root { --header-h: 88px; }
+
+  /* Скрываем оригинальный однострочный хедер */
+  .header-one-row { display: none; }
+
+  /* Показываем двухрядный */
+  .header-two-row {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: var(--header-h);
+  }
+
+  .header-inner {
+    display: flex;
+    flex-direction: column;
+    padding-inline: 1.5rem;
+    height: var(--header-h);
+    grid-template-columns: unset;
+    align-items: stretch;
+  }
+
+  /* Верхний ряд: логотип по центру, иконки справа */
+  .header-row-top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 52px;
+    flex-shrink: 0;
+  }
+
+  .header-row-top .logo {
+    display: flex;
+    justify-content: center;
+  }
+
+  .header-row-top .logo-text {
+    font-size: 1.7rem;
+  }
+
+  .header-icons {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .header-icons .nav-icon-btn {
+    width: 30px;
+    height: 30px;
+  }
+
+  /* Нижний ряд: все ссылки по центру */
+  .header-row-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    flex-shrink: 0;
+    border-top: 1px solid var(--color-border);
+    gap: 0;
+  }
+
+  .header-row-bottom .nav-link {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-soft);
+    padding: 0 0.85rem;
+    white-space: nowrap;
+    position: relative;
+  }
+
+  .header-row-bottom .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0.85rem;
+    right: 0.85rem;
+    height: 1px;
+    background: var(--color-rose);
+    width: 0;
+    transition: width var(--t-base) var(--ease-out);
+  }
+
+  .header-row-bottom .nav-link:hover { color: var(--color-ink); }
+  .header-row-bottom .nav-link:hover::after { width: calc(100% - 1.7rem); }
 }
 
 @media (max-width: 768px) {

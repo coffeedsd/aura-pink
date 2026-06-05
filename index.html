@@ -30,6 +30,46 @@
   <!-- ─── НАВИГАЦИЯ ─────────────────────────────────────── -->
   <header class="site-header" id="site-header">
     <div class="header-inner">
+      <!-- Two-row header for medium viewports (desktop mode on phones) -->
+      <div class="header-two-row">
+        <div class="header-row-top">
+          <a href="#" class="logo" aria-label="Aura Pink — на главную">
+        <span class="logo-text">Aura Pink</span>
+      </a>
+          <div class="header-icons">
+            <!-- Поиск -->
+        <button class="nav-icon-btn" aria-label="Поиск" aria-expanded="false">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+            <!-- Избранное -->
+        <button class="nav-icon-btn" aria-label="Избранное">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+          <span class="wishlist-count" aria-live="polite"></span>
+        </button>
+            <!-- Корзина -->
+        <button class="nav-icon-btn cart-btn" aria-label="Корзина">
+          <span class="cart-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <path d="M16 10a4 4 0 01-8 0"/>
+            </svg>
+          </span>
+          <span class="cart-count" aria-live="polite">0</span>
+        </button>
+          </div>
+        </div>
+        <div class="header-row-bottom">
+          <a href="catalog.html" class="nav-link">Каталог</a>
+        <a href="#about" class="nav-link">О марке</a>
+          <a href="#lookbook" class="nav-link">Lookbook</a>
+          <a href="delivery.html" class="nav-link">Доставка</a>
+          <a href="contacts.html" class="nav-link">Контакты</a>
+        </div>
+      </div>
+      <!-- Original single-row layout -->
+      <div class="header-one-row">
+
       <nav class="nav-left">
         <a href="catalog.html" class="nav-link">Каталог</a>
         <a href="#about" class="nav-link">О марке</a>
@@ -71,7 +111,8 @@
           <span></span><span></span><span></span>
         </button>
       </nav>
-    </div>
+    
+      </div></div>
   </header>
 
   <div class="mobile-nav" id="mobile-nav" aria-hidden="true">
