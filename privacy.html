@@ -129,7 +129,7 @@
   <header class="site-header" id="site-header">
     <div class="header-inner">
 <nav class="nav-left">
-        <a href="index.html#collection" class="nav-link">Коллекция</a>
+        <a href="catalog.html" class="nav-link">Коллекция</a>
         <a href="index.html#about" class="nav-link">О марке</a>
         <a href="index.html#lookbook" class="nav-link nav-link--medium">Lookbook</a>
       </nav>
@@ -261,6 +261,198 @@
     <p style="font-size: 0.75rem; color: var(--color-text-muted);">© 2026 Aura Pink · Сафоново. Все права защищены.</p>
   </footer>
 
+  <!-- ─── SIDEBAR КОРЗИНА ───────────────────────────────── -->
+  <aside class="cart-sidebar" id="cart-sidebar" aria-label="Корзина" aria-hidden="true">
+    <div class="cart-backdrop" id="cart-backdrop"></div>
+    <div class="cart-panel">
+      <header class="cart-header">
+        <h2 class="cart-title">Корзина</h2>
+        <button class="cart-close" id="cart-close" aria-label="Закрыть корзину">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </header>
+      <div class="cart-body" id="cart-body">
+        <div class="cart-empty" id="cart-empty">
+          <p class="cart-empty-icon">◇</p>
+          <p class="cart-empty-text">В корзине пока пусто</p>
+          <a href="catalog.html" class="btn btn--ghost cart-empty-btn">Перейти в каталог</a>
+        </div>
+        <ul class="cart-items" id="cart-items" aria-live="polite"></ul>
+      </div>
+      <footer class="cart-footer" id="cart-footer" style="display:none;">
+        <div class="cart-total-row">
+          <span class="cart-total-label">Итого</span>
+          <span class="cart-total-price" id="cart-total">0 ₽</span>
+        </div>
+        <button class="btn btn--primary cart-checkout" id="checkout-btn">Оформить заказ</button>
+        <p class="cart-pay-note">Оплата через ЮKassa · Безопасно</p>
+      </footer>
+    </div>
+  </aside>
+
+
+  <!-- ─── SIDEBAR ИЗБРАННОЕ ────────────────────────────── -->
+  <aside class="cart-sidebar" id="wishlist-sidebar" aria-label="Избранное" aria-hidden="true">
+    <div class="cart-backdrop" id="wishlist-backdrop"></div>
+    <div class="cart-panel">
+      <header class="cart-header">
+        <h2 class="cart-title">Избранное</h2>
+        <button class="cart-close" id="wishlist-close" aria-label="Закрыть избранное">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </header>
+      <div class="cart-body" id="wishlist-body">
+        <div class="cart-empty" id="wishlist-empty">
+          <p class="cart-empty-icon">♡</p>
+          <p class="cart-empty-text">Вы ещё ничего не добавили</p>
+          <a href="catalog.html" class="btn btn--ghost cart-empty-btn">Смотреть коллекцию</a>
+        </div>
+        <ul class="cart-items" id="wishlist-items" aria-live="polite"></ul>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ─── МОДАЛКА РАЗМЕРА ──────────────────────────────── -->
+  <div class="modal-overlay" id="size-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Выбор размера">
+    <div class="modal-panel">
+      <button class="modal-close" id="modal-close" aria-label="Закрыть">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="modal-img-wrap">
+        <div class="modal-product-img" id="modal-img"></div>
+      </div>
+      <div class="modal-content">
+        <p class="modal-brand">Aura Pink</p>
+        <h3 class="modal-product-name" id="modal-name"></h3>
+        <p class="modal-price" id="modal-price"></p>
+        <div class="modal-sizes">
+          <p class="modal-label">Выберите размер</p>
+          <div class="size-selector" id="size-selector">
+            <button class="size-option" data-size="XS">XS</button>
+            <button class="size-option" data-size="S">S</button>
+            <button class="size-option active" data-size="M">M</button>
+            <button class="size-option" data-size="L">L</button>
+            <button class="size-option" data-size="XL">XL</button>
+          </div>
+        </div>
+        <button class="btn btn--primary modal-add-to-cart" id="modal-add-btn">Добавить в корзину</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── ТОСТ ─────────────────────────────────────────── -->
+  <div class="toast-container" id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- ─── МОДАЛКА ОПЛАТЫ ───────────────────────────────── -->
+  <div class="modal-overlay" id="payment-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Оформление заказа">
+    <div class="modal-panel modal-panel--payment">
+      <button class="modal-close" id="payment-modal-close" aria-label="Закрыть">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="payment-content">
+        <div class="payment-header">
+          <p class="modal-brand">Aura Pink</p>
+          <h3 class="payment-title">Оформление заказа</h3>
+        </div>
+        <div class="payment-order-summary" id="payment-summary"></div>
+        <div class="payment-form-section">
+          <p class="modal-label">Контактные данные</p>
+          <div class="payment-fields">
+            <input type="text" class="payment-input" placeholder="Имя и фамилия" id="pay-name" />
+            <input type="email" class="payment-input" placeholder="Email" id="pay-email" />
+            <input type="tel" class="payment-input" placeholder="Телефон" id="pay-phone" />
+          </div>
+          <p class="modal-label" style="margin-top:1.5rem;">Адрес доставки</p>
+          <div class="payment-fields">
+            <input type="text" class="payment-input" placeholder="Город" id="pay-city" />
+            <input type="text" class="payment-input" placeholder="Улица, дом, квартира" id="pay-address" />
+            <input type="text" class="payment-input" placeholder="Индекс" id="pay-zip" />
+          </div>
+          <p class="modal-label" style="margin-top:1.5rem;">Способ оплаты</p>
+          <div class="payment-methods">
+            <label class="pay-method active" data-method="bank_card">
+              <input type="radio" name="pay_method" value="bank_card" checked hidden/>
+              <span class="pay-method-label">Банковская карта</span>
+            </label>
+            <label class="pay-method" data-method="sbp">
+              <input type="radio" name="pay_method" value="sbp" hidden/>
+              <span class="pay-method-label">СБП</span>
+            </label>
+            <label class="pay-method" data-method="yoo_money">
+              <input type="radio" name="pay_method" value="yoo_money" hidden/>
+              <span class="pay-method-label">ЮMoney</span>
+            </label>
+          </div>
+        </div>
+        <div class="payment-total-row">
+          <span>Итого к оплате</span>
+          <strong id="payment-total-display">0 ₽</strong>
+        </div>
+        <button class="btn btn--primary payment-submit" id="payment-submit-btn">
+          Перейти к оплате через ЮKassa
+        </button>
+        <p class="cart-pay-note">Платёж обрабатывается сервисом ЮKassa.<br>256-bit SSL шифрование.</p>
+        <div id="yokassa-widget-container"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── ЧАТ ПОДДЕРЖКИ ────────────────────────────────── -->
+  <div class="support-widget" id="support-widget" aria-label="Чат поддержки">
+    <div class="support-chat" id="support-chat" aria-hidden="true">
+      <div class="support-chat-header">
+        <div class="support-avatar">AP</div>
+        <div class="support-info">
+          <p class="support-name">Aura Pink</p>
+          <p class="support-status">
+            <span class="support-online-dot"></span>Онлайн · ответим быстро
+          </p>
+        </div>
+        <button class="support-chat-close" id="support-chat-close" aria-label="Закрыть чат">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+
+      <div class="support-messages" id="support-messages">
+        <div class="support-msg support-msg--in">
+          <p>Привет! 👋 Рада вас видеть в Aura Pink.</p>
+          <p>Если есть вопросы по размеру или составу — спрашивайте, я помогу.</p>
+        </div>
+      </div>
+
+      <div class="support-input-row">
+        <input type="text" class="support-input" id="support-input" placeholder="Написать сообщение…" aria-label="Сообщение поддержке" maxlength="500" />
+        <button class="support-send" id="support-send" aria-label="Отправить">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <button class="support-fab" id="support-fab" aria-label="Открыть чат поддержки" aria-expanded="false">
+      <span class="support-fab-icon support-fab-icon--chat">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      </span>
+      <span class="support-fab-icon support-fab-icon--close">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </span>
+      <span class="support-fab-badge" id="support-badge" aria-hidden="true">1</span>
+    </button>
+  </div>
+
+
+  <!-- ─── COOKIE БАННЕР ───────────────────────────────────── -->
+  <div class="cookie-banner" id="cookie-banner" role="alertdialog" aria-label="Использование cookies" aria-hidden="true">
+    <p class="cookie-text">
+      Мы используем cookies для корректной работы сайта, персонализации и статистики.
+      Продолжая пользоваться сайтом, вы соглашаетесь с нашей
+      <a href="privacy.html" class="cookie-link">политикой конфиденциальности</a>.
+    </p>
+    <div class="cookie-actions">
+      <button class="btn btn--primary cookie-accept" id="cookie-accept">Принять</button>
+      <button class="cookie-decline" id="cookie-decline">Только необходимые</button>
+    </div>
+  </div>
+
   <script>
     // Хедер scroll
     const header = document.getElementById('site-header');
@@ -268,6 +460,198 @@
       header.classList.toggle('scrolled', window.scrollY > 24);
     }, { passive: true });
   </script>
+  <!-- ─── SIDEBAR КОРЗИНА ───────────────────────────────── -->
+  <aside class="cart-sidebar" id="cart-sidebar" aria-label="Корзина" aria-hidden="true">
+    <div class="cart-backdrop" id="cart-backdrop"></div>
+    <div class="cart-panel">
+      <header class="cart-header">
+        <h2 class="cart-title">Корзина</h2>
+        <button class="cart-close" id="cart-close" aria-label="Закрыть корзину">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </header>
+      <div class="cart-body" id="cart-body">
+        <div class="cart-empty" id="cart-empty">
+          <p class="cart-empty-icon">◇</p>
+          <p class="cart-empty-text">В корзине пока пусто</p>
+          <a href="catalog.html" class="btn btn--ghost cart-empty-btn">Перейти в каталог</a>
+        </div>
+        <ul class="cart-items" id="cart-items" aria-live="polite"></ul>
+      </div>
+      <footer class="cart-footer" id="cart-footer" style="display:none;">
+        <div class="cart-total-row">
+          <span class="cart-total-label">Итого</span>
+          <span class="cart-total-price" id="cart-total">0 ₽</span>
+        </div>
+        <button class="btn btn--primary cart-checkout" id="checkout-btn">Оформить заказ</button>
+        <p class="cart-pay-note">Оплата через ЮKassa · Безопасно</p>
+      </footer>
+    </div>
+  </aside>
+
+
+  <!-- ─── SIDEBAR ИЗБРАННОЕ ────────────────────────────── -->
+  <aside class="cart-sidebar" id="wishlist-sidebar" aria-label="Избранное" aria-hidden="true">
+    <div class="cart-backdrop" id="wishlist-backdrop"></div>
+    <div class="cart-panel">
+      <header class="cart-header">
+        <h2 class="cart-title">Избранное</h2>
+        <button class="cart-close" id="wishlist-close" aria-label="Закрыть избранное">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </header>
+      <div class="cart-body" id="wishlist-body">
+        <div class="cart-empty" id="wishlist-empty">
+          <p class="cart-empty-icon">♡</p>
+          <p class="cart-empty-text">Вы ещё ничего не добавили</p>
+          <a href="catalog.html" class="btn btn--ghost cart-empty-btn">Смотреть коллекцию</a>
+        </div>
+        <ul class="cart-items" id="wishlist-items" aria-live="polite"></ul>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ─── МОДАЛКА РАЗМЕРА ──────────────────────────────── -->
+  <div class="modal-overlay" id="size-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Выбор размера">
+    <div class="modal-panel">
+      <button class="modal-close" id="modal-close" aria-label="Закрыть">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="modal-img-wrap">
+        <div class="modal-product-img" id="modal-img"></div>
+      </div>
+      <div class="modal-content">
+        <p class="modal-brand">Aura Pink</p>
+        <h3 class="modal-product-name" id="modal-name"></h3>
+        <p class="modal-price" id="modal-price"></p>
+        <div class="modal-sizes">
+          <p class="modal-label">Выберите размер</p>
+          <div class="size-selector" id="size-selector">
+            <button class="size-option" data-size="XS">XS</button>
+            <button class="size-option" data-size="S">S</button>
+            <button class="size-option active" data-size="M">M</button>
+            <button class="size-option" data-size="L">L</button>
+            <button class="size-option" data-size="XL">XL</button>
+          </div>
+        </div>
+        <button class="btn btn--primary modal-add-to-cart" id="modal-add-btn">Добавить в корзину</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── ТОСТ ─────────────────────────────────────────── -->
+  <div class="toast-container" id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- ─── МОДАЛКА ОПЛАТЫ ───────────────────────────────── -->
+  <div class="modal-overlay" id="payment-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Оформление заказа">
+    <div class="modal-panel modal-panel--payment">
+      <button class="modal-close" id="payment-modal-close" aria-label="Закрыть">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="payment-content">
+        <div class="payment-header">
+          <p class="modal-brand">Aura Pink</p>
+          <h3 class="payment-title">Оформление заказа</h3>
+        </div>
+        <div class="payment-order-summary" id="payment-summary"></div>
+        <div class="payment-form-section">
+          <p class="modal-label">Контактные данные</p>
+          <div class="payment-fields">
+            <input type="text" class="payment-input" placeholder="Имя и фамилия" id="pay-name" />
+            <input type="email" class="payment-input" placeholder="Email" id="pay-email" />
+            <input type="tel" class="payment-input" placeholder="Телефон" id="pay-phone" />
+          </div>
+          <p class="modal-label" style="margin-top:1.5rem;">Адрес доставки</p>
+          <div class="payment-fields">
+            <input type="text" class="payment-input" placeholder="Город" id="pay-city" />
+            <input type="text" class="payment-input" placeholder="Улица, дом, квартира" id="pay-address" />
+            <input type="text" class="payment-input" placeholder="Индекс" id="pay-zip" />
+          </div>
+          <p class="modal-label" style="margin-top:1.5rem;">Способ оплаты</p>
+          <div class="payment-methods">
+            <label class="pay-method active" data-method="bank_card">
+              <input type="radio" name="pay_method" value="bank_card" checked hidden/>
+              <span class="pay-method-label">Банковская карта</span>
+            </label>
+            <label class="pay-method" data-method="sbp">
+              <input type="radio" name="pay_method" value="sbp" hidden/>
+              <span class="pay-method-label">СБП</span>
+            </label>
+            <label class="pay-method" data-method="yoo_money">
+              <input type="radio" name="pay_method" value="yoo_money" hidden/>
+              <span class="pay-method-label">ЮMoney</span>
+            </label>
+          </div>
+        </div>
+        <div class="payment-total-row">
+          <span>Итого к оплате</span>
+          <strong id="payment-total-display">0 ₽</strong>
+        </div>
+        <button class="btn btn--primary payment-submit" id="payment-submit-btn">
+          Перейти к оплате через ЮKassa
+        </button>
+        <p class="cart-pay-note">Платёж обрабатывается сервисом ЮKassa.<br>256-bit SSL шифрование.</p>
+        <div id="yokassa-widget-container"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── ЧАТ ПОДДЕРЖКИ ────────────────────────────────── -->
+  <div class="support-widget" id="support-widget" aria-label="Чат поддержки">
+    <div class="support-chat" id="support-chat" aria-hidden="true">
+      <div class="support-chat-header">
+        <div class="support-avatar">AP</div>
+        <div class="support-info">
+          <p class="support-name">Aura Pink</p>
+          <p class="support-status">
+            <span class="support-online-dot"></span>Онлайн · ответим быстро
+          </p>
+        </div>
+        <button class="support-chat-close" id="support-chat-close" aria-label="Закрыть чат">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+
+      <div class="support-messages" id="support-messages">
+        <div class="support-msg support-msg--in">
+          <p>Привет! 👋 Рада вас видеть в Aura Pink.</p>
+          <p>Если есть вопросы по размеру или составу — спрашивайте, я помогу.</p>
+        </div>
+      </div>
+
+      <div class="support-input-row">
+        <input type="text" class="support-input" id="support-input" placeholder="Написать сообщение…" aria-label="Сообщение поддержке" maxlength="500" />
+        <button class="support-send" id="support-send" aria-label="Отправить">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <button class="support-fab" id="support-fab" aria-label="Открыть чат поддержки" aria-expanded="false">
+      <span class="support-fab-icon support-fab-icon--chat">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      </span>
+      <span class="support-fab-icon support-fab-icon--close">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </span>
+      <span class="support-fab-badge" id="support-badge" aria-hidden="true">1</span>
+    </button>
+  </div>
+
+
+  <!-- ─── COOKIE БАННЕР ───────────────────────────────────── -->
+  <div class="cookie-banner" id="cookie-banner" role="alertdialog" aria-label="Использование cookies" aria-hidden="true">
+    <p class="cookie-text">
+      Мы используем cookies для корректной работы сайта, персонализации и статистики.
+      Продолжая пользоваться сайтом, вы соглашаетесь с нашей
+      <a href="privacy.html" class="cookie-link">политикой конфиденциальности</a>.
+    </p>
+    <div class="cookie-actions">
+      <button class="btn btn--primary cookie-accept" id="cookie-accept">Принять</button>
+      <button class="cookie-decline" id="cookie-decline">Только необходимые</button>
+    </div>
+  </div>
+
   <script>
     // Back to top
     const _btt = document.getElementById('back-to-top');
@@ -278,6 +662,198 @@
       _btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     }
   </script>
+  <!-- ─── SIDEBAR КОРЗИНА ───────────────────────────────── -->
+  <aside class="cart-sidebar" id="cart-sidebar" aria-label="Корзина" aria-hidden="true">
+    <div class="cart-backdrop" id="cart-backdrop"></div>
+    <div class="cart-panel">
+      <header class="cart-header">
+        <h2 class="cart-title">Корзина</h2>
+        <button class="cart-close" id="cart-close" aria-label="Закрыть корзину">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </header>
+      <div class="cart-body" id="cart-body">
+        <div class="cart-empty" id="cart-empty">
+          <p class="cart-empty-icon">◇</p>
+          <p class="cart-empty-text">В корзине пока пусто</p>
+          <a href="catalog.html" class="btn btn--ghost cart-empty-btn">Перейти в каталог</a>
+        </div>
+        <ul class="cart-items" id="cart-items" aria-live="polite"></ul>
+      </div>
+      <footer class="cart-footer" id="cart-footer" style="display:none;">
+        <div class="cart-total-row">
+          <span class="cart-total-label">Итого</span>
+          <span class="cart-total-price" id="cart-total">0 ₽</span>
+        </div>
+        <button class="btn btn--primary cart-checkout" id="checkout-btn">Оформить заказ</button>
+        <p class="cart-pay-note">Оплата через ЮKassa · Безопасно</p>
+      </footer>
+    </div>
+  </aside>
+
+
+  <!-- ─── SIDEBAR ИЗБРАННОЕ ────────────────────────────── -->
+  <aside class="cart-sidebar" id="wishlist-sidebar" aria-label="Избранное" aria-hidden="true">
+    <div class="cart-backdrop" id="wishlist-backdrop"></div>
+    <div class="cart-panel">
+      <header class="cart-header">
+        <h2 class="cart-title">Избранное</h2>
+        <button class="cart-close" id="wishlist-close" aria-label="Закрыть избранное">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </header>
+      <div class="cart-body" id="wishlist-body">
+        <div class="cart-empty" id="wishlist-empty">
+          <p class="cart-empty-icon">♡</p>
+          <p class="cart-empty-text">Вы ещё ничего не добавили</p>
+          <a href="catalog.html" class="btn btn--ghost cart-empty-btn">Смотреть коллекцию</a>
+        </div>
+        <ul class="cart-items" id="wishlist-items" aria-live="polite"></ul>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ─── МОДАЛКА РАЗМЕРА ──────────────────────────────── -->
+  <div class="modal-overlay" id="size-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Выбор размера">
+    <div class="modal-panel">
+      <button class="modal-close" id="modal-close" aria-label="Закрыть">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="modal-img-wrap">
+        <div class="modal-product-img" id="modal-img"></div>
+      </div>
+      <div class="modal-content">
+        <p class="modal-brand">Aura Pink</p>
+        <h3 class="modal-product-name" id="modal-name"></h3>
+        <p class="modal-price" id="modal-price"></p>
+        <div class="modal-sizes">
+          <p class="modal-label">Выберите размер</p>
+          <div class="size-selector" id="size-selector">
+            <button class="size-option" data-size="XS">XS</button>
+            <button class="size-option" data-size="S">S</button>
+            <button class="size-option active" data-size="M">M</button>
+            <button class="size-option" data-size="L">L</button>
+            <button class="size-option" data-size="XL">XL</button>
+          </div>
+        </div>
+        <button class="btn btn--primary modal-add-to-cart" id="modal-add-btn">Добавить в корзину</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── ТОСТ ─────────────────────────────────────────── -->
+  <div class="toast-container" id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- ─── МОДАЛКА ОПЛАТЫ ───────────────────────────────── -->
+  <div class="modal-overlay" id="payment-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Оформление заказа">
+    <div class="modal-panel modal-panel--payment">
+      <button class="modal-close" id="payment-modal-close" aria-label="Закрыть">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="payment-content">
+        <div class="payment-header">
+          <p class="modal-brand">Aura Pink</p>
+          <h3 class="payment-title">Оформление заказа</h3>
+        </div>
+        <div class="payment-order-summary" id="payment-summary"></div>
+        <div class="payment-form-section">
+          <p class="modal-label">Контактные данные</p>
+          <div class="payment-fields">
+            <input type="text" class="payment-input" placeholder="Имя и фамилия" id="pay-name" />
+            <input type="email" class="payment-input" placeholder="Email" id="pay-email" />
+            <input type="tel" class="payment-input" placeholder="Телефон" id="pay-phone" />
+          </div>
+          <p class="modal-label" style="margin-top:1.5rem;">Адрес доставки</p>
+          <div class="payment-fields">
+            <input type="text" class="payment-input" placeholder="Город" id="pay-city" />
+            <input type="text" class="payment-input" placeholder="Улица, дом, квартира" id="pay-address" />
+            <input type="text" class="payment-input" placeholder="Индекс" id="pay-zip" />
+          </div>
+          <p class="modal-label" style="margin-top:1.5rem;">Способ оплаты</p>
+          <div class="payment-methods">
+            <label class="pay-method active" data-method="bank_card">
+              <input type="radio" name="pay_method" value="bank_card" checked hidden/>
+              <span class="pay-method-label">Банковская карта</span>
+            </label>
+            <label class="pay-method" data-method="sbp">
+              <input type="radio" name="pay_method" value="sbp" hidden/>
+              <span class="pay-method-label">СБП</span>
+            </label>
+            <label class="pay-method" data-method="yoo_money">
+              <input type="radio" name="pay_method" value="yoo_money" hidden/>
+              <span class="pay-method-label">ЮMoney</span>
+            </label>
+          </div>
+        </div>
+        <div class="payment-total-row">
+          <span>Итого к оплате</span>
+          <strong id="payment-total-display">0 ₽</strong>
+        </div>
+        <button class="btn btn--primary payment-submit" id="payment-submit-btn">
+          Перейти к оплате через ЮKassa
+        </button>
+        <p class="cart-pay-note">Платёж обрабатывается сервисом ЮKassa.<br>256-bit SSL шифрование.</p>
+        <div id="yokassa-widget-container"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── ЧАТ ПОДДЕРЖКИ ────────────────────────────────── -->
+  <div class="support-widget" id="support-widget" aria-label="Чат поддержки">
+    <div class="support-chat" id="support-chat" aria-hidden="true">
+      <div class="support-chat-header">
+        <div class="support-avatar">AP</div>
+        <div class="support-info">
+          <p class="support-name">Aura Pink</p>
+          <p class="support-status">
+            <span class="support-online-dot"></span>Онлайн · ответим быстро
+          </p>
+        </div>
+        <button class="support-chat-close" id="support-chat-close" aria-label="Закрыть чат">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+
+      <div class="support-messages" id="support-messages">
+        <div class="support-msg support-msg--in">
+          <p>Привет! 👋 Рада вас видеть в Aura Pink.</p>
+          <p>Если есть вопросы по размеру или составу — спрашивайте, я помогу.</p>
+        </div>
+      </div>
+
+      <div class="support-input-row">
+        <input type="text" class="support-input" id="support-input" placeholder="Написать сообщение…" aria-label="Сообщение поддержке" maxlength="500" />
+        <button class="support-send" id="support-send" aria-label="Отправить">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <button class="support-fab" id="support-fab" aria-label="Открыть чат поддержки" aria-expanded="false">
+      <span class="support-fab-icon support-fab-icon--chat">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      </span>
+      <span class="support-fab-icon support-fab-icon--close">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </span>
+      <span class="support-fab-badge" id="support-badge" aria-hidden="true">1</span>
+    </button>
+  </div>
+
+
+  <!-- ─── COOKIE БАННЕР ───────────────────────────────────── -->
+  <div class="cookie-banner" id="cookie-banner" role="alertdialog" aria-label="Использование cookies" aria-hidden="true">
+    <p class="cookie-text">
+      Мы используем cookies для корректной работы сайта, персонализации и статистики.
+      Продолжая пользоваться сайтом, вы соглашаетесь с нашей
+      <a href="privacy.html" class="cookie-link">политикой конфиденциальности</a>.
+    </p>
+    <div class="cookie-actions">
+      <button class="btn btn--primary cookie-accept" id="cookie-accept">Принять</button>
+      <button class="cookie-decline" id="cookie-decline">Только необходимые</button>
+    </div>
+  </div>
+
   <script>
     // Burger menu
     (function() {
@@ -298,6 +874,198 @@
       });
     })();
   </script>
+
+  <!-- ─── SIDEBAR КОРЗИНА ───────────────────────────────── -->
+  <aside class="cart-sidebar" id="cart-sidebar" aria-label="Корзина" aria-hidden="true">
+    <div class="cart-backdrop" id="cart-backdrop"></div>
+    <div class="cart-panel">
+      <header class="cart-header">
+        <h2 class="cart-title">Корзина</h2>
+        <button class="cart-close" id="cart-close" aria-label="Закрыть корзину">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </header>
+      <div class="cart-body" id="cart-body">
+        <div class="cart-empty" id="cart-empty">
+          <p class="cart-empty-icon">◇</p>
+          <p class="cart-empty-text">В корзине пока пусто</p>
+          <a href="catalog.html" class="btn btn--ghost cart-empty-btn">Перейти в каталог</a>
+        </div>
+        <ul class="cart-items" id="cart-items" aria-live="polite"></ul>
+      </div>
+      <footer class="cart-footer" id="cart-footer" style="display:none;">
+        <div class="cart-total-row">
+          <span class="cart-total-label">Итого</span>
+          <span class="cart-total-price" id="cart-total">0 ₽</span>
+        </div>
+        <button class="btn btn--primary cart-checkout" id="checkout-btn">Оформить заказ</button>
+        <p class="cart-pay-note">Оплата через ЮKassa · Безопасно</p>
+      </footer>
+    </div>
+  </aside>
+
+
+  <!-- ─── SIDEBAR ИЗБРАННОЕ ────────────────────────────── -->
+  <aside class="cart-sidebar" id="wishlist-sidebar" aria-label="Избранное" aria-hidden="true">
+    <div class="cart-backdrop" id="wishlist-backdrop"></div>
+    <div class="cart-panel">
+      <header class="cart-header">
+        <h2 class="cart-title">Избранное</h2>
+        <button class="cart-close" id="wishlist-close" aria-label="Закрыть избранное">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </header>
+      <div class="cart-body" id="wishlist-body">
+        <div class="cart-empty" id="wishlist-empty">
+          <p class="cart-empty-icon">♡</p>
+          <p class="cart-empty-text">Вы ещё ничего не добавили</p>
+          <a href="catalog.html" class="btn btn--ghost cart-empty-btn">Смотреть коллекцию</a>
+        </div>
+        <ul class="cart-items" id="wishlist-items" aria-live="polite"></ul>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ─── МОДАЛКА РАЗМЕРА ──────────────────────────────── -->
+  <div class="modal-overlay" id="size-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Выбор размера">
+    <div class="modal-panel">
+      <button class="modal-close" id="modal-close" aria-label="Закрыть">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="modal-img-wrap">
+        <div class="modal-product-img" id="modal-img"></div>
+      </div>
+      <div class="modal-content">
+        <p class="modal-brand">Aura Pink</p>
+        <h3 class="modal-product-name" id="modal-name"></h3>
+        <p class="modal-price" id="modal-price"></p>
+        <div class="modal-sizes">
+          <p class="modal-label">Выберите размер</p>
+          <div class="size-selector" id="size-selector">
+            <button class="size-option" data-size="XS">XS</button>
+            <button class="size-option" data-size="S">S</button>
+            <button class="size-option active" data-size="M">M</button>
+            <button class="size-option" data-size="L">L</button>
+            <button class="size-option" data-size="XL">XL</button>
+          </div>
+        </div>
+        <button class="btn btn--primary modal-add-to-cart" id="modal-add-btn">Добавить в корзину</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── ТОСТ ─────────────────────────────────────────── -->
+  <div class="toast-container" id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- ─── МОДАЛКА ОПЛАТЫ ───────────────────────────────── -->
+  <div class="modal-overlay" id="payment-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Оформление заказа">
+    <div class="modal-panel modal-panel--payment">
+      <button class="modal-close" id="payment-modal-close" aria-label="Закрыть">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="payment-content">
+        <div class="payment-header">
+          <p class="modal-brand">Aura Pink</p>
+          <h3 class="payment-title">Оформление заказа</h3>
+        </div>
+        <div class="payment-order-summary" id="payment-summary"></div>
+        <div class="payment-form-section">
+          <p class="modal-label">Контактные данные</p>
+          <div class="payment-fields">
+            <input type="text" class="payment-input" placeholder="Имя и фамилия" id="pay-name" />
+            <input type="email" class="payment-input" placeholder="Email" id="pay-email" />
+            <input type="tel" class="payment-input" placeholder="Телефон" id="pay-phone" />
+          </div>
+          <p class="modal-label" style="margin-top:1.5rem;">Адрес доставки</p>
+          <div class="payment-fields">
+            <input type="text" class="payment-input" placeholder="Город" id="pay-city" />
+            <input type="text" class="payment-input" placeholder="Улица, дом, квартира" id="pay-address" />
+            <input type="text" class="payment-input" placeholder="Индекс" id="pay-zip" />
+          </div>
+          <p class="modal-label" style="margin-top:1.5rem;">Способ оплаты</p>
+          <div class="payment-methods">
+            <label class="pay-method active" data-method="bank_card">
+              <input type="radio" name="pay_method" value="bank_card" checked hidden/>
+              <span class="pay-method-label">Банковская карта</span>
+            </label>
+            <label class="pay-method" data-method="sbp">
+              <input type="radio" name="pay_method" value="sbp" hidden/>
+              <span class="pay-method-label">СБП</span>
+            </label>
+            <label class="pay-method" data-method="yoo_money">
+              <input type="radio" name="pay_method" value="yoo_money" hidden/>
+              <span class="pay-method-label">ЮMoney</span>
+            </label>
+          </div>
+        </div>
+        <div class="payment-total-row">
+          <span>Итого к оплате</span>
+          <strong id="payment-total-display">0 ₽</strong>
+        </div>
+        <button class="btn btn--primary payment-submit" id="payment-submit-btn">
+          Перейти к оплате через ЮKassa
+        </button>
+        <p class="cart-pay-note">Платёж обрабатывается сервисом ЮKassa.<br>256-bit SSL шифрование.</p>
+        <div id="yokassa-widget-container"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── ЧАТ ПОДДЕРЖКИ ────────────────────────────────── -->
+  <div class="support-widget" id="support-widget" aria-label="Чат поддержки">
+    <div class="support-chat" id="support-chat" aria-hidden="true">
+      <div class="support-chat-header">
+        <div class="support-avatar">AP</div>
+        <div class="support-info">
+          <p class="support-name">Aura Pink</p>
+          <p class="support-status">
+            <span class="support-online-dot"></span>Онлайн · ответим быстро
+          </p>
+        </div>
+        <button class="support-chat-close" id="support-chat-close" aria-label="Закрыть чат">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+
+      <div class="support-messages" id="support-messages">
+        <div class="support-msg support-msg--in">
+          <p>Привет! 👋 Рада вас видеть в Aura Pink.</p>
+          <p>Если есть вопросы по размеру или составу — спрашивайте, я помогу.</p>
+        </div>
+      </div>
+
+      <div class="support-input-row">
+        <input type="text" class="support-input" id="support-input" placeholder="Написать сообщение…" aria-label="Сообщение поддержке" maxlength="500" />
+        <button class="support-send" id="support-send" aria-label="Отправить">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <button class="support-fab" id="support-fab" aria-label="Открыть чат поддержки" aria-expanded="false">
+      <span class="support-fab-icon support-fab-icon--chat">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      </span>
+      <span class="support-fab-icon support-fab-icon--close">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </span>
+      <span class="support-fab-badge" id="support-badge" aria-hidden="true">1</span>
+    </button>
+  </div>
+
+
+  <!-- ─── COOKIE БАННЕР ───────────────────────────────────── -->
+  <div class="cookie-banner" id="cookie-banner" role="alertdialog" aria-label="Использование cookies" aria-hidden="true">
+    <p class="cookie-text">
+      Мы используем cookies для корректной работы сайта, персонализации и статистики.
+      Продолжая пользоваться сайтом, вы соглашаетесь с нашей
+      <a href="privacy.html" class="cookie-link">политикой конфиденциальности</a>.
+    </p>
+    <div class="cookie-actions">
+      <button class="btn btn--primary cookie-accept" id="cookie-accept">Принять</button>
+      <button class="cookie-decline" id="cookie-decline">Только необходимые</button>
+    </div>
+  </div>
 
   <script>
     /* ── Header layout switcher ──────────────────────────
