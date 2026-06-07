@@ -386,6 +386,8 @@
           <option value="suit">Костюмы</option>
           <option value="blouse">Блузы</option>
           <option value="skirt">Юбки</option>
+          <option value="hoodie">Худи и толстовки</option>
+          <option value="tshirt">Футболки и топы</option>
           <option value="other">Другое</option>
         </select>
       </div>
@@ -490,8 +492,19 @@
     document.getElementById('stat-out').textContent = products.filter(p => !p.in_stock).length;
   }
 
+
+  function escHtml(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
   function categoryLabel(cat) {
-    return { dress:'Платья', suit:'Костюмы', blouse:'Блузы', skirt:'Юбки', other:'Другое' }[cat] || cat || '—';
+    return { dress:'Платья', suit:'Костюмы', blouse:'Блузы', skirt:'Юбки', hoodie:'Худи и толстовки', tshirt:'Футболки и топы', other:'Другое' }[cat] || cat || '—';
   }
 
   function renderTable() {
@@ -502,12 +515,12 @@
     }
     tbody.innerHTML = products.map(p => `
       <tr>
-        <td>${p.image_url ? `<img src="${p.image_url}" class="product-thumb" alt="" onerror="this.style.display='none'">` : `<div class="product-thumb-placeholder">📷</div>`}</td>
-        <td><strong>${p.name}</strong>${p.description ? `<br><small style="color:#8A7869">${p.description.substring(0,40)}${p.description.length>40?'...':''}</small>` : ''}</td>
-        <td>${categoryLabel(p.category)}</td>
+        <td>${p.image_url ? `<img src="${escHtml(p.image_url)}" class="product-thumb" alt="" onerror="this.style.display='none'">` : `<div class="product-thumb-placeholder">📷</div>`}</td>
+        <td><strong>${escHtml(p.name)}</strong>${p.description ? `<br><small style="color:#8A7869">${escHtml(p.description.substring(0,40))}${p.description.length>40?'...':''}</small>` : ''}</td>
+        <td>${escHtml(categoryLabel(p.category))}</td>
         <td><strong>${Number(p.price).toLocaleString('ru-RU')} ₽</strong>${p.old_price ? `<br><small style="text-decoration:line-through;color:#B8A99A">${Number(p.old_price).toLocaleString('ru-RU')} ₽</small>` : ''}</td>
         <td>${p.in_stock ? `<span class="badge-in">✓ Есть</span>` : `<span class="badge-out">✗ Нет</span>`}</td>
-        <td><div class="table-actions"><button class="btn-edit" onclick="openModal('${p.id}')">Изменить</button><button class="btn-delete" onclick="deleteProduct('${p.id}','${p.name.replace(/'/g,"\\'")}')">Удалить</button></div></td>
+        <td><div class="table-actions"><button class="btn-edit" onclick="openModal('${escHtml(p.id)}')">Изменить</button><button class="btn-delete" onclick="deleteProduct('${escHtml(p.id)}','${escHtml(p.name)}')">Удалить</button></div></td>
       </tr>`).join('');
   }
 

@@ -628,6 +628,8 @@ input, button { font-family: inherit; }
 .category-img--1 { background: linear-gradient(160deg, #E8D8CC 0%, #C4A090 100%); }
 .category-img--2 { background: linear-gradient(160deg, #D4C8BC 0%, #A89080 100%); }
 .category-img--3 { background: linear-gradient(160deg, #EAE0D4 0%, #C8B4A4 100%); }
+.category-img--4 { background: linear-gradient(160deg, #D8D0E8 0%, #A090C4 100%); }
+.category-img--5 { background: linear-gradient(160deg, #E8D0D8 0%, #C490A0 100%); }
 
 .category-overlay {
   position: absolute;

@@ -1,3 +1,5 @@
+function escHtml(s){if(s==null)return '';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+
 /**
  * AURA PINK — script.js
  * ─────────────────────────────────────────────────────
@@ -257,16 +259,16 @@ const Cart = (function() {
       li.innerHTML = `
         <div class="cart-item-img product-img--${item.img}"></div>
         <div class="cart-item-body">
-          <p class="cart-item-name">${item.name}</p>
-          <p class="cart-item-meta">Размер: ${item.size}</p>
+          <p class="cart-item-name">${escHtml(item.name)}</p>
+          <p class="cart-item-meta">Размер: ${escHtml(item.size)}</p>
           <div class="cart-item-qty">
-            <button class="qty-btn" data-action="dec" data-id="${item.id}" data-size="${item.size}" aria-label="Уменьшить">−</button>
+            <button class="qty-btn" data-action="dec" data-id="${escHtml(item.id)}" data-size="${escHtml(item.size)}" aria-label="Уменьшить">−</button>
             <span class="qty-val">${item.qty}</span>
-            <button class="qty-btn" data-action="inc" data-id="${item.id}" data-size="${item.size}" aria-label="Увеличить">+</button>
+            <button class="qty-btn" data-action="inc" data-id="${escHtml(item.id)}" data-size="${escHtml(item.size)}" aria-label="Увеличить">+
           </div>
         </div>
         <div class="cart-item-right">
-          <button class="cart-remove-btn" data-id="${item.id}" data-size="${item.size}" aria-label="Удалить">×</button>
+          <button class="cart-remove-btn" data-id="${escHtml(item.id)}" data-size="${escHtml(item.size)}" aria-label="Удалить">×</button>
           <p class="cart-item-price">${formatPrice(item.price * item.qty)}</p>
         </div>
       `;
@@ -590,7 +592,7 @@ const Payment = (function() {
     if (!summaryEl) return;
     summaryEl.innerHTML = items.map(item =>
       `<div style="display:flex;justify-content:space-between;">
-        <span>${item.name} × ${item.qty} (${item.size})</span>
+        <span>${escHtml(item.name)} × ${item.qty} (${escHtml(item.size)})</span>
         <span>${fmt(item.price * item.qty)}</span>
        </div>`
     ).join('') +
@@ -1792,13 +1794,13 @@ const Wishlist = (function() {
       li.innerHTML = `
         <div class="cart-item-img product-img--${item.img}"></div>
         <div class="cart-item-body">
-          <p class="cart-item-name">${item.name}</p>
+          <p class="cart-item-name">${escHtml(item.name)}</p>
           <p class="cart-item-meta">${item.price ? Number(item.price).toLocaleString('ru-RU') + ' ₽' : '— ₽'}</p>
           <button class="btn btn--ghost" style="margin-top:0.5rem;padding:0.4rem 1rem;font-size:0.7rem;"
-            data-move-to-cart="${item.id}">В корзину</button>
+            data-move-to-cart="${escHtml(item.id)}">В корзину</button>
         </div>
         <div class="cart-item-right">
-          <button class="cart-remove-btn" data-remove-wish="${item.id}" aria-label="Удалить из избранного">×</button>
+          <button class="cart-remove-btn" data-remove-wish="${escHtml(item.id)}" aria-label="Удалить из избранного">×</button>
         </div>
       `;
       itemsList.appendChild(li);

@@ -415,6 +415,8 @@
             <li class="filter-item"><button data-cat="suit">Костюмы</button></li>
             <li class="filter-item"><button data-cat="blouse">Блузы</button></li>
             <li class="filter-item"><button data-cat="skirt">Юбки</button></li>
+            <li class="filter-item"><button data-cat="hoodie">Худи и толстовки</button></li>
+            <li class="filter-item"><button data-cat="tshirt">Футболки и топы</button></li>
             <li class="filter-item"><button data-cat="other">Другое</button></li>
           </ul>
         </div>
@@ -785,18 +787,18 @@
         const price = Number(p.price).toLocaleString('ru-RU');
         const oldPrice = p.old_price ? `<span class="product-old-price">${Number(p.old_price).toLocaleString('ru-RU')} ₽</span>` : '';
         const badge = p.old_price ? `<div class="product-badge product-badge--sale">−${Math.round((1 - p.price/p.old_price)*100)}%</div>` : (!p.in_stock ? `<div class="product-badge product-badge--out">Нет в наличии</div>` : '');
-        const imgStyle = p.image_url ? `background-image:url('${p.image_url}');background-size:cover;background-position:center;` : '';
+        const imgStyle = p.image_url ? `background-image:url('${escHtml(p.image_url)}');background-size:cover;background-position:center;` : '';
 
         card.innerHTML = `
-          <a href="product.html?id=${p.id}" class="product-card-link" aria-label="${p.name}">
+          <a href="product.html?id=${escHtml(p.id)}" class="product-card-link" aria-label="${escHtml(p.name)}">
             <div class="product-img-wrap">
               <div class="product-img" style="${imgStyle}"></div>
               ${badge}
             </div>
             <div class="product-info">
               <p class="product-brand">Aura Pink</p>
-              <h3 class="product-name">${p.name}</h3>
-              <p class="product-material">${p.description ? p.description.substring(0, 60) + (p.description.length > 60 ? '...' : '') : ''}</p>
+              <h3 class="product-name">${escHtml(p.name)}</h3>
+              <p class="product-material">${p.description ? escHtml(p.description.substring(0, 60)) + (p.description.length > 60 ? '...' : '') : ''}</p>
               <div class="product-footer">
                 <span class="product-price">${price} ₽ ${oldPrice}</span>
               </div>
@@ -850,7 +852,7 @@
     });
 
     // ── Активные теги фильтров ────────────────────────────
-    const catLabels = { dress:'Платья', suit:'Костюмы', blouse:'Блузы', skirt:'Юбки', other:'Другое' };
+    const catLabels = { dress:'Платья', suit:'Костюмы', blouse:'Блузы', skirt:'Юбки', hoodie:'Худи и толстовки', tshirt:'Футболки и топы', other:'Другое' };
 
     function updateActiveFilterTags() {
       const wrap = document.getElementById('active-filters');
@@ -858,7 +860,11 @@
       if (activeFilters.cat !== 'all') {
         const tag = document.createElement('span');
         tag.className = 'active-filter-tag';
-        tag.innerHTML = `${catLabels[activeFilters.cat]}<button onclick="clearCat()">×</button>`;
+        tag.textContent = catLabels[activeFilters.cat] || activeFilters.cat;
+        const btnCat = document.createElement('button');
+        btnCat.textContent = '×';
+        btnCat.onclick = clearCat;
+        tag.appendChild(btnCat);
         wrap.appendChild(tag);
       }
       if (activeFilters.priceMin || activeFilters.priceMax) {
@@ -866,7 +872,11 @@
         tag.className = 'active-filter-tag';
         const min = activeFilters.priceMin ? activeFilters.priceMin.toLocaleString('ru-RU') : '0';
         const max = activeFilters.priceMax ? activeFilters.priceMax.toLocaleString('ru-RU') : '∞';
-        tag.innerHTML = `${min} — ${max} ₽<button onclick="clearPrice()">×</button>`;
+        tag.textContent = `${min} — ${max} ₽`;
+        const btnPrice = document.createElement('button');
+        btnPrice.textContent = '×';
+        btnPrice.onclick = clearPrice;
+        tag.appendChild(btnPrice);
         wrap.appendChild(tag);
       }
     }

@@ -613,11 +613,13 @@
       }
     }
 
+    function escHtml(s){if(s==null)return '';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+
     function renderProduct(p, related) {
       const price = Number(p.price).toLocaleString('ru-RU');
       const discount = p.old_price ? Math.round((1 - p.price/p.old_price)*100) : 0;
 
-      const catLabels = { dress:'Платья', suit:'Костюмы', blouse:'Блузы', skirt:'Юбки', other:'Другое' };
+      const catLabels = { dress:'Платья', suit:'Костюмы', blouse:'Блузы', skirt:'Юбки', hoodie:'Худи и толстовки', tshirt:'Футболки и топы', other:'Другое' };
 
       document.getElementById('product-main').innerHTML = `
         <div class="product-page">
@@ -626,9 +628,9 @@
             <span>/</span>
             <a href="catalog.html">Каталог</a>
             <span>/</span>
-            <a href="catalog.html?cat=${p.category}">${catLabels[p.category] || 'Каталог'}</a>
+            <a href="catalog.html?cat=${escHtml(p.category)}">${escHtml(catLabels[p.category] || 'Каталог')}</a>
             <span>/</span>
-            <span style="color:var(--color-ink)">${p.name}</span>
+            <span style="color:var(--color-ink)">${escHtml(p.name)}</span>
           </nav>
 
           <div class="product-layout">
@@ -725,15 +727,15 @@
           const card = document.createElement('article');
           card.className = 'product-card';
           const rPrice = Number(r.price).toLocaleString('ru-RU');
-          const imgStyle = r.image_url ? `background-image:url('${r.image_url}');background-size:cover;background-position:center;` : '';
+          const imgStyle = r.image_url ? `background-image:url('${escHtml(r.image_url)}');background-size:cover;background-position:center;` : '';
           card.innerHTML = `
-            <a href="product.html?id=${r.id}" style="text-decoration:none;color:inherit">
+            <a href="product.html?id=${escHtml(r.id)}" style="text-decoration:none;color:inherit">
               <div class="product-img-wrap">
                 <div class="product-img" style="${imgStyle}"></div>
               </div>
               <div class="product-info">
                 <p class="product-brand">Aura Pink</p>
-                <h3 class="product-name">${r.name}</h3>
+                <h3 class="product-name">${escHtml(r.name)}</h3>
                 <div class="product-footer"><span class="product-price">${rPrice} ₽</span></div>
               </div>
             </a>`;

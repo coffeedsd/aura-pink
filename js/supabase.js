@@ -1,3 +1,9 @@
+// ── Безопасное экранирование HTML ───────
+function escHtml(str) {
+  if (str === null || str === undefined) return '';
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
 // ── Supabase Config ──────────────────────────────────────
 const SUPABASE_URL = 'https://acylsytogrgyesrcbthx.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_sTp-NwKK2dqaMjjMDcqDsA_HSl45kVD';
@@ -67,7 +73,7 @@ function createProductCard(p, index) {
 
   article.innerHTML = `
     <div class="product-img-wrap">
-      <div class="product-img" style="${imgStyle}"></div>
+      <div class="product-img" style="${escHtml(imgStyle)}"></div>
       <div class="product-actions">
         <button class="wishlist-btn" aria-label="В избранное">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
@@ -75,9 +81,9 @@ function createProductCard(p, index) {
           </svg>
         </button>
         <button class="quick-add-btn"
-          data-id="${p.id}"
-          data-name="${p.name}"
-          data-price="${p.price}"
+          data-id="${escHtml(p.id)}"
+          data-name="${escHtml(p.name)}"
+          data-price="${escHtml(p.price)}"
           ${p.in_stock ? '' : 'disabled'}>
           ${p.in_stock ? 'Быстрый заказ' : 'Нет в наличии'}
         </button>
@@ -86,8 +92,8 @@ function createProductCard(p, index) {
     </div>
     <div class="product-info">
       <p class="product-brand">Aura Pink</p>
-      <h3 class="product-name">${p.name}</h3>
-      <p class="product-material">${p.description || ''}</p>
+      <h3 class="product-name">${escHtml(p.name)}</h3>
+      <p class="product-material">${escHtml(p.description || '')}</p>
       <div class="product-footer">
         <span class="product-price">${price} ₽ ${oldPrice}</span>
       </div>
@@ -110,10 +116,10 @@ async function loadCategoryCounts() {
     });
     const data = await res.json();
 
-    const counts = { dress: 0, suit: 0, blouse: 0, skirt: 0 };
+    const counts = { dress: 0, suit: 0, blouse: 0, skirt: 0, hoodie: 0, tshirt: 0 };
     data.forEach(p => { if (counts[p.category] !== undefined) counts[p.category]++; });
 
-    const labels = { dress: 'Платья', suit: 'Костюмы', blouse: 'Блузы', skirt: 'Юбки' };
+    const labels = { dress: 'Платья', suit: 'Костюмы', blouse: 'Блузы', skirt: 'Юбки', hoodie: 'Худи и толстовки', tshirt: 'Футболки и топы' };
 
     Object.entries(counts).forEach(([cat, count]) => {
       const el = document.getElementById(`count-${cat}`);
@@ -129,7 +135,7 @@ async function loadCategoryCounts() {
 
   } catch(e) {
     // При ошибке показываем заглушку
-    ['dress','suit','blouse'].forEach(cat => {
+    ['dress','suit','blouse','hoodie','tshirt'].forEach(cat => {
       const el = document.getElementById(`count-${cat}`);
       if (el) el.textContent = 'Смотреть →';
     });
@@ -199,6 +205,21 @@ async function loadSiteImages() {
       }
       if (row.id === 'category-blouse') {
         document.querySelectorAll('.category-img--3').forEach(el => {
+          el.style.backgroundImage = `url('${url}')`;
+          el.style.backgroundSize = 'cover';
+          el.style.backgroundPosition = 'center';
+        });
+      }
+
+      if (row.id === 'category-hoodie') {
+        document.querySelectorAll('.category-img--4').forEach(el => {
+          el.style.backgroundImage = `url('${url}')`;
+          el.style.backgroundSize = 'cover';
+          el.style.backgroundPosition = 'center';
+        });
+      }
+      if (row.id === 'category-tshirt') {
+        document.querySelectorAll('.category-img--5').forEach(el => {
           el.style.backgroundImage = `url('${url}')`;
           el.style.backgroundSize = 'cover';
           el.style.backgroundPosition = 'center';
