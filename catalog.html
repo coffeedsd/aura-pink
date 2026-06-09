@@ -27,7 +27,7 @@
   <!-- ─── НАВИГАЦИЯ ─────────────────────────────────────── -->
   <header class="site-header" id="site-header">
     <div class="header-inner">
-<nav class="nav-left">
+      <nav class="nav-left">
         <a href="catalog.html" class="nav-link" style="color:var(--color-rose)">Каталог</a>
         <a href="index.html#about" class="nav-link">О марке</a>
         <a href="index.html#lookbook" class="nav-link nav-link--medium">Lookbook</a>
@@ -56,13 +56,13 @@
     </div>
   </header>
 
-    <div class="mobile-nav" id="mobile-nav" aria-hidden="true">
-      <a href="catalog.html" class="mobile-nav-link">Каталог</a>
-      <a href="index.html#about" class="mobile-nav-link">О марке</a>
-      <a href="index.html#lookbook" class="mobile-nav-link">Lookbook</a>
-    </div>
+  <div class="mobile-nav" id="mobile-nav" aria-hidden="true">
+    <a href="catalog.html" class="mobile-nav-link">Каталог</a>
+    <a href="index.html#about" class="mobile-nav-link">О марке</a>
+    <a href="index.html#lookbook" class="mobile-nav-link">Lookbook</a>
+  </div>
 
-  <main>
+  <main style="padding-top: var(--header-h);">
     <div class="catalog-layout">
 
       <!-- ── Сайдбар с фильтрами ── -->
@@ -123,7 +123,6 @@
                   <button class="sort-option" data-value="price-desc" role="option">Дороже</button>
                 </div>
               </div>
-              <!-- hidden select for JS compatibility -->
               <select class="sort-select" id="sort-select">
                 <option value="new">Сначала новые</option>
                 <option value="price-asc">Дешевле</option>
@@ -154,11 +153,6 @@
   </main>
 
   <!-- ─── ФУТЕР ─────────────────────────────────────────── -->
-  <!-- ─── КНОПКА НАВЕРХ ────────────────────────────────── -->
-  <button class="back-to-top" id="back-to-top" aria-label="Наверх">
-    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
-  </button>
-
   <footer class="site-footer" aria-label="Подвал сайта">
     <div class="footer-inner">
       <div class="footer-top">
@@ -201,6 +195,11 @@
     </div>
   </footer>
 
+  <!-- ─── КНОПКА НАВЕРХ ────────────────────────────────── -->
+  <button class="back-to-top" id="back-to-top" aria-label="Наверх">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+
   <!-- ─── SIDEBAR КОРЗИНА ───────────────────────────────── -->
   <aside class="cart-sidebar" id="cart-sidebar" aria-label="Корзина" aria-hidden="true">
     <div class="cart-backdrop" id="cart-backdrop"></div>
@@ -215,7 +214,7 @@
         <div class="cart-empty" id="cart-empty">
           <p class="cart-empty-icon">◇</p>
           <p class="cart-empty-text">В корзине пока пусто</p>
-          <a href="catalog.html" class="btn btn--ghost cart-empty-btn">Перейти в каталог</a>
+          <a href="catalog.html" class="btn btn--ghost cart-empty-btn" style="border: 1px solid var(--color-border); padding: 0.5rem 1rem; display: inline-block; margin-top: 1rem;">Перейти в каталог</a>
         </div>
         <ul class="cart-items" id="cart-items" aria-live="polite"></ul>
       </div>
@@ -224,12 +223,11 @@
           <span class="cart-total-label">Итого</span>
           <span class="cart-total-price" id="cart-total">0 ₽</span>
         </div>
-        <button class="btn btn--primary cart-checkout" id="checkout-btn">Оформить заказ</button>
+        <button class="btn cart-checkout" id="checkout-btn">Оформить заказ</button>
         <p class="cart-pay-note">Оплата через ЮKassa · Безопасно</p>
       </footer>
     </div>
   </aside>
-
 
   <!-- ─── SIDEBAR ИЗБРАННОЕ ────────────────────────────── -->
   <aside class="cart-sidebar" id="wishlist-sidebar" aria-label="Избранное" aria-hidden="true">
@@ -245,7 +243,7 @@
         <div class="cart-empty" id="wishlist-empty">
           <p class="cart-empty-icon">♡</p>
           <p class="cart-empty-text">Вы ещё ничего не добавили</p>
-          <a href="catalog.html" class="btn btn--ghost cart-empty-btn">Смотреть коллекцию</a>
+          <a href="catalog.html" class="btn btn--ghost cart-empty-btn" style="border: 1px solid var(--color-border); padding: 0.5rem 1rem; display: inline-block; margin-top: 1rem;">Смотреть коллекцию</a>
         </div>
         <ul class="cart-items" id="wishlist-items" aria-live="polite"></ul>
       </div>
@@ -275,13 +273,10 @@
             <button class="size-option" data-size="XL">XL</button>
           </div>
         </div>
-        <button class="btn btn--primary modal-add-to-cart" id="modal-add-btn">Добавить в корзину</button>
+        <button class="btn modal-add-to-cart" id="modal-add-btn">Добавить в корзину</button>
       </div>
     </div>
   </div>
-
-  <!-- ─── ТОСТ ─────────────────────────────────────────── -->
-  <div class="toast-container" id="toast-container" aria-live="polite" aria-atomic="true"></div>
 
   <!-- ─── МОДАЛКА ОПЛАТЫ ───────────────────────────────── -->
   <div class="modal-overlay" id="payment-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Оформление заказа">
@@ -328,10 +323,10 @@
           <span>Итого к оплате</span>
           <strong id="payment-total-display">0 ₽</strong>
         </div>
-        <button class="btn btn--primary payment-submit" id="payment-submit-btn">
+        <button class="btn payment-submit" id="payment-submit-btn">
           Перейти к оплате через ЮKassa
         </button>
-        <p class="cart-pay-note">Платёж обрабатывается сервисом ЮKassa.<br>256-bit SSL шифрование.</p>
+        <p class="cart-pay-note" style="font-size: 11px; text-align: center; color: var(--color-text-muted); margin-top: var(--space-2);">Платёж обрабатывается сервисом ЮKassa.<br>256-bit SSL шифрование.</p>
         <div id="yokassa-widget-container"></div>
       </div>
     </div>
@@ -372,13 +367,9 @@
       <span class="support-fab-icon support-fab-icon--chat">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
       </span>
-      <span class="support-fab-icon support-fab-icon--close">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </span>
       <span class="support-fab-badge" id="support-badge" aria-hidden="true">1</span>
     </button>
   </div>
-
 
   <!-- ─── COOKIE БАННЕР ───────────────────────────────────── -->
   <div class="cookie-banner" id="cookie-banner" role="alertdialog" aria-label="Использование cookies" aria-hidden="true">
@@ -388,257 +379,18 @@
       <a href="privacy.html" class="cookie-link">политикой конфиденциальности</a>.
     </p>
     <div class="cookie-actions">
-      <button class="btn btn--primary cookie-accept" id="cookie-accept">Принять</button>
-      <button class="cookie-decline" id="cookie-decline">Только необходимые</button>
+      <button class="btn cookie-accept" id="cookie-accept">Принять</button>
+      <button class="cookie-decline" id="cookie-decline" style="background:none; border:none; color:inherit; text-decoration: underline; font-size:11px; cursor:pointer;">Только необходимые</button>
     </div>
   </div>
 
+  <div class="toast-container" id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- ─── GLOBAL SCRIPTS (from script.js) ───────────────── -->
   <script src="js/script.js"></script>
   <script src="js/supabase.js"></script>
-  <script>
 
-const SUPABASE_URL = 'https://acylsytogrgyesrcbthx.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_sTp-NwKK2dqaMjjMDcqDsA_HSl45kVD';
-
-let allProducts = [];
-let activeFilters = { cat: 'all', stock: 'all', priceMin: null, priceMax: null };
-
-// ── Загрузка товаров из базы данных Supabase ───────────
-async function loadProducts() {
-  try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/products?order=created_at.desc`, {
-      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
-    });
-    allProducts = await res.json();
-    renderProducts();
-  } catch {
-    const grid = document.getElementById('catalog-grid');
-    if (grid) {
-      grid.innerHTML = '<div class="catalog-empty"><p>Не удалось загрузить товары. Проверьте соединение.</p></div>';
-    }
-  }
-}
-
-function renderProducts() {
-  let products = allProducts.filter(p => {
-    if (activeFilters.cat !== 'all' && p.category !== activeFilters.cat) return false;
-    if (activeFilters.stock === 'in' && !p.in_stock) return false;
-    if (activeFilters.priceMin && p.price < activeFilters.priceMin) return false;
-    if (activeFilters.priceMax && p.price > activeFilters.priceMax) return false;
-    return true;
-  });
-
-  // Сортировка по значению
-  const sort = document.getElementById('sort-select').value;
-  if (sort === 'price-asc') products.sort((a, b) => a.price - b.price);
-  if (sort === 'price-desc') products.sort((a, b) => b.price - a.price);
-
-  // Корректное склонение числительных для товаров
-  const n = products.length;
-  const countEl = document.getElementById('catalog-count');
-  if (countEl) {
-    countEl.textContent = `${n} ${n === 1 ? 'товар' : n > 1 && n < 5 ? 'товара' : 'товаров'}`;
-  }
-
-  const grid = document.getElementById('catalog-grid');
-  if (!grid) return;
-  grid.innerHTML = '';
-
-  if (products.length === 0) {
-    grid.innerHTML = '<div class="catalog-empty"><p>Ничего не найдено</p><p style="font-size:.85rem">Попробуйте изменить параметры фильтров</p></div>';
-    return;
-  }
-
-  products.forEach((p, i) => {
-    const card = document.createElement('article');
-    card.className = 'product-card reveal';
-    card.dataset.delay = i % 3;
-    const price = Number(p.price).toLocaleString('ru-RU');
-    const oldPrice = p.old_price ? `<span class="product-old-price">${Number(p.old_price).toLocaleString('ru-RU')} ₽</span>` : '';
-    const badge = p.old_price ? `<div class="product-badge product-badge--sale">−${Math.round((1 - p.price/p.old_price)*100)}%</div>` : (!p.in_stock ? `<div class="product-badge" style="background:#555;">Нет в наличии</div>` : '');
-    const imgStyle = p.image_url ? `background-image:url('${escHtml(p.image_url)}');background-size:cover;background-position:center;` : '';
-
-    card.innerHTML = `
-      <div class="product-img-wrap">
-        <div class="product-img" style="${imgStyle}"></div>
-        <div class="product-actions">
-          <button class="wishlist-btn" aria-label="В избранное">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
-          </button>
-          <button class="quick-add-btn" data-id="${escHtml(p.id)}" data-name="${escHtml(p.name)}" data-price="${escHtml(p.price)}" data-img="${escHtml(p.image_url || '')}">Быстрый заказ</button>
-        </div>
-        ${badge}
-      </div>
-      <div class="product-info">
-        <p class="product-brand">Aura Pink</p>
-        <h3 class="product-name">${escHtml(p.name)}</h3>
-        <p class="product-material">${p.description ? escHtml(p.description.substring(0, 60)) + (p.description.length > 60 ? '...' : '') : ''}</p>
-        <div class="product-footer">
-          <span class="product-price">${price} ₽ ${oldPrice}</span>
-        </div>
-      </div>`;
-    grid.appendChild(card);
-  });
-
-  // Перезапускаем анимации плавного появления
-  setTimeout(() => {
-    document.querySelectorAll('.reveal').forEach((el, i) => {
-      setTimeout(() => el.classList.add('is-visible'), i * 60);
-    });
-  }, 50);
-}
-
-// ── Управление категориями ──────────────────────────
-document.querySelectorAll('[data-cat]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('[data-cat]').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    activeFilters.cat = btn.dataset.cat;
-    renderProducts();
-    updateActiveFilterTags();
-  });
-});
-
-const urlCat = new URLSearchParams(location.search).get('cat');
-if (urlCat) {
-  const btn = document.querySelector(`[data-cat="${urlCat}"]`);
-  if (btn) { btn.click(); }
-}
-
-// ── Управление фильтром наличия ─────────────────────
-document.querySelectorAll('[data-stock]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('[data-stock]').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    activeFilters.stock = btn.dataset.stock;
-    renderProducts();
-  });
-});
-
-// ── Применение фильтра цены ────────────────────────
-document.getElementById('price-apply').addEventListener('click', () => {
-  activeFilters.priceMin = parseFloat(document.getElementById('price-min').value) || null;
-  activeFilters.priceMax = parseFloat(document.getElementById('price-max').value) || null;
-  renderProducts();
-  updateActiveFilterTags();
-});
-
-// ── Теги активных фильтров ──────────────────────────
-const catLabels = { dress:'Платья', suit:'Костюмы', blouse:'Блузы', skirt:'Юбки', hoodie:'Худи и толстовки', tshirt:'Футболки и топы', other:'Другое' };
-
-function updateActiveFilterTags() {
-  const wrap = document.getElementById('active-filters');
-  if (!wrap) return;
-  wrap.innerHTML = '';
-  if (activeFilters.cat !== 'all') {
-    const tag = document.createElement('span');
-    tag.className = 'active-filter-tag';
-    tag.textContent = catLabels[activeFilters.cat] || activeFilters.cat;
-    const btnCat = document.createElement('button');
-    btnCat.textContent = '×';
-    btnCat.onclick = clearCat;
-    tag.appendChild(btnCat);
-    wrap.appendChild(tag);
-  }
-  if (activeFilters.priceMin || activeFilters.priceMax) {
-    const tag = document.createElement('span');
-    tag.className = 'active-filter-tag';
-    const min = activeFilters.priceMin ? activeFilters.priceMin.toLocaleString('ru-RU') : '0';
-    const max = activeFilters.priceMax ? activeFilters.priceMax.toLocaleString('ru-RU') : '∞';
-    tag.textContent = `${min} — ${max} ₽`;
-    const btnPrice = document.createElement('button');
-    btnPrice.textContent = '×';
-    btnPrice.onclick = clearPrice;
-    tag.appendChild(btnPrice);
-    wrap.appendChild(tag);
-  }
-}
-
-window.clearCat = () => {
-  activeFilters.cat = 'all';
-  document.querySelectorAll('[data-cat]').forEach(b => b.classList.remove('active'));
-  document.querySelector('[data-cat="all"]').classList.add('active');
-  renderProducts(); updateActiveFilterTags();
-};
-
-window.clearPrice = () => {
-  activeFilters.priceMin = null; activeFilters.priceMax = null;
-  document.getElementById('price-min').value = '';
-  document.getElementById('price-max').value = '';
-  renderProducts(); updateActiveFilterTags();
-};
-
-document.getElementById('sort-select').addEventListener('change', renderProducts);
-
-// ── Мобильный фильтр Toggle ────────────────────────
-document.getElementById('mobile-filter-btn').addEventListener('click', () => {
-  document.getElementById('catalog-sidebar').classList.toggle('open');
-});
-
-loadProducts();
-  
-
-// ── Back to Top Button Controller ─────────────────
-const _btt = document.getElementById('back-to-top');
-if (_btt) {
-  window.addEventListener('scroll', () => {
-    _btt.classList.toggle('visible', window.scrollY > 300);
-  }, { passive: true });
-  _btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-}
-  
-
-/* ── Header layout switcher ──────────────────────────
-   Синхронизация двухрядного хедера на планшетах и в ПК-режиме
-─────────────────────────────────────────────────────── */
-(function() {
-  var header = document.getElementById('site-header');
-  function checkLayout() {
-    var w = window.innerWidth;
-    if (w >= 769 && w <= 1050) {
-      header.classList.add('header-two-row');
-      document.documentElement.style.setProperty('--header-h', '100px');
-    } else {
-      header.classList.remove('header-two-row');
-      document.documentElement.style.removeProperty('--header-h');
-    }
-  }
-  checkLayout();
-  window.addEventListener('resize', checkLayout);
-})();
-  
-
-// ── Кастомная сортировка ──
-(function() {
-  var custom = document.getElementById('sort-custom');
-  var trigger = document.getElementById('sort-trigger');
-  var label = document.getElementById('sort-label');
-  var select = document.getElementById('sort-select');
-  var options = custom.querySelectorAll('.sort-option');
-
-  trigger.addEventListener('click', function(e) {
-    e.stopPropagation();
-    custom.classList.toggle('open');
-  });
-
-  options.forEach(function(opt) {
-    opt.addEventListener('click', function() {
-      var val = opt.dataset.value;
-      label.textContent = opt.textContent;
-      select.value = val;
-      options.forEach(function(o) { o.classList.remove('active'); });
-      opt.classList.add('active');
-      custom.classList.remove('open');
-      select.dispatchEvent(new Event('change'));
-    });
-  });
-
-  document.addEventListener('click', function() {
-    custom.classList.remove('open');
-  });
-})();
-  
-  </script>
+  <!-- ─── CATALOG BUSINESS LOGIC (from catalog.html) ───── -->
   <script>
     const SUPABASE_URL = 'https://acylsytogrgyesrcbthx.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_sTp-NwKK2dqaMjjMDcqDsA_HSl45kVD';
@@ -646,7 +398,7 @@ if (_btt) {
     let allProducts = [];
     let activeFilters = { cat: 'all', stock: 'all', priceMin: null, priceMax: null };
 
-    // ── Загрузка ──────────────────────────────────────────
+    // ── Загрузка товаров из базы данных Supabase ───────────
     async function loadProducts() {
       try {
         const res = await fetch(`${SUPABASE_URL}/rest/v1/products?order=created_at.desc`, {
@@ -655,7 +407,10 @@ if (_btt) {
         allProducts = await res.json();
         renderProducts();
       } catch {
-        document.getElementById('catalog-grid').innerHTML = '<div class="catalog-empty"><p>Не удалось загрузить товары</p></div>';
+        const grid = document.getElementById('catalog-grid');
+        if (grid) {
+          grid.innerHTML = '<div class="catalog-empty"><p>Не удалось загрузить товары. Проверьте соединение.</p></div>';
+        }
       }
     }
 
@@ -668,21 +423,24 @@ if (_btt) {
         return true;
       });
 
-      // Сортировка
+      // Сортировка по значению
       const sort = document.getElementById('sort-select').value;
       if (sort === 'price-asc') products.sort((a, b) => a.price - b.price);
       if (sort === 'price-desc') products.sort((a, b) => b.price - a.price);
 
-      // Счётчик
+      // Корректное склонение числительных для товаров
       const n = products.length;
-      document.getElementById('catalog-count').textContent =
-        `${n} ${n === 1 ? 'товар' : n < 5 ? 'товара' : 'товаров'}`;
+      const countEl = document.getElementById('catalog-count');
+      if (countEl) {
+        countEl.textContent = `${n} ${n === 1 ? 'товар' : n > 1 && n < 5 ? 'товара' : 'товаров'}`;
+      }
 
       const grid = document.getElementById('catalog-grid');
+      if (!grid) return;
       grid.innerHTML = '';
 
       if (products.length === 0) {
-        grid.innerHTML = '<div class="catalog-empty"><p>Ничего не найдено</p><p style="font-size:.85rem">Попробуйте изменить фильтры</p></div>';
+        grid.innerHTML = '<div class="catalog-empty"><p>Ничего не найдено</p><p style="font-size:.85rem">Попробуйте изменить параметры фильтров</p></div>';
         return;
       }
 
@@ -692,7 +450,7 @@ if (_btt) {
         card.dataset.delay = i % 3;
         const price = Number(p.price).toLocaleString('ru-RU');
         const oldPrice = p.old_price ? `<span class="product-old-price">${Number(p.old_price).toLocaleString('ru-RU')} ₽</span>` : '';
-        const badge = p.old_price ? `<div class="product-badge product-badge--sale">−${Math.round((1 - p.price/p.old_price)*100)}%</div>` : (!p.in_stock ? `<div class="product-badge product-badge--out">Нет в наличии</div>` : '');
+        const badge = p.old_price ? `<div class="product-badge product-badge--sale">−${Math.round((1 - p.price/p.old_price)*100)}%</div>` : (!p.in_stock ? `<div class="product-badge" style="background:#555;">Нет в наличии</div>` : '');
         const imgStyle = p.image_url ? `background-image:url('${escHtml(p.image_url)}');background-size:cover;background-position:center;` : '';
 
         card.innerHTML = `
@@ -717,7 +475,7 @@ if (_btt) {
         grid.appendChild(card);
       });
 
-      // Reveal анимации
+      // Перезапускаем анимации плавного появления
       setTimeout(() => {
         document.querySelectorAll('.reveal').forEach((el, i) => {
           setTimeout(() => el.classList.add('is-visible'), i * 60);
@@ -725,7 +483,7 @@ if (_btt) {
       }, 50);
     }
 
-    // ── Фильтры по категории ──────────────────────────────
+    // ── Управление категориями ──────────────────────────
     document.querySelectorAll('[data-cat]').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('[data-cat]').forEach(b => b.classList.remove('active'));
@@ -736,14 +494,13 @@ if (_btt) {
       });
     });
 
-    // Проверяем URL параметр категории
     const urlCat = new URLSearchParams(location.search).get('cat');
     if (urlCat) {
       const btn = document.querySelector(`[data-cat="${urlCat}"]`);
       if (btn) { btn.click(); }
     }
 
-    // ── Фильтры по наличию ────────────────────────────────
+    // ── Управление фильтром наличия ─────────────────────
     document.querySelectorAll('[data-stock]').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('[data-stock]').forEach(b => b.classList.remove('active'));
@@ -753,7 +510,7 @@ if (_btt) {
       });
     });
 
-    // ── Цена ─────────────────────────────────────────────
+    // ── Применение фильтра цены ────────────────────────
     document.getElementById('price-apply').addEventListener('click', () => {
       activeFilters.priceMin = parseFloat(document.getElementById('price-min').value) || null;
       activeFilters.priceMax = parseFloat(document.getElementById('price-max').value) || null;
@@ -761,11 +518,12 @@ if (_btt) {
       updateActiveFilterTags();
     });
 
-    // ── Активные теги фильтров ────────────────────────────
+    // ── Теги активных фильтров ──────────────────────────
     const catLabels = { dress:'Платья', suit:'Костюмы', blouse:'Блузы', skirt:'Юбки', hoodie:'Худи и толстовки', tshirt:'Футболки и топы', other:'Другое' };
 
     function updateActiveFilterTags() {
       const wrap = document.getElementById('active-filters');
+      if (!wrap) return;
       wrap.innerHTML = '';
       if (activeFilters.cat !== 'all') {
         const tag = document.createElement('span');
@@ -805,18 +563,18 @@ if (_btt) {
       renderProducts(); updateActiveFilterTags();
     };
 
-    // ── Сортировка ────────────────────────────────────────
     document.getElementById('sort-select').addEventListener('change', renderProducts);
 
-    // ── Мобильный фильтр ─────────────────────────────────
+    // ── Мобильный фильтр Toggle ────────────────────────
     document.getElementById('mobile-filter-btn').addEventListener('click', () => {
       document.getElementById('catalog-sidebar').classList.toggle('open');
     });
 
     loadProducts();
   </script>
+
   <script>
-    // Back to top
+    // ── Back to Top Button Controller ─────────────────
     const _btt = document.getElementById('back-to-top');
     if (_btt) {
       window.addEventListener('scroll', () => {
@@ -828,9 +586,7 @@ if (_btt) {
 
   <script>
     /* ── Header layout switcher ──────────────────────────
-       В режиме ПК на телефоне (viewport ~980px) переключаем
-       хедер на двухрядный макет через JS-класс.
-       Порог 769–1050px определён по реальному innerWidth.
+       Синхронизация двухрядного хедера на планшетах и в ПК-режиме
     ─────────────────────────────────────────────────────── */
     (function() {
       var header = document.getElementById('site-header');
@@ -880,5 +636,8 @@ if (_btt) {
       });
     })();
   </script>
+
+  <!-- ─── Инициализация быстрого добавления в корзину ── -->
+  
 </body>
 </html>
