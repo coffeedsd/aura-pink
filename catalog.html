@@ -21,345 +21,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
-  <style>
-    .catalog-layout {
-      display: grid;
-      grid-template-columns: 240px 1fr;
-      gap: var(--space-12);
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: var(--space-12) var(--space-8);
-    }
-
-    /* ── Sidebar ── */
-    .catalog-sidebar {
-      position: sticky;
-      top: calc(var(--header-h) + 2rem);
-      height: fit-content;
-    }
-
-    .sidebar-section {
-      margin-bottom: var(--space-8);
-      padding-bottom: var(--space-8);
-      border-bottom: 1px solid var(--color-border);
-    }
-    .sidebar-section:last-child { border-bottom: none; }
-
-    .sidebar-label {
-      font-size: var(--text-xs);
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--color-text-soft);
-      margin-bottom: var(--space-4);
-    }
-
-    .filter-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-2);
-    }
-
-    .filter-item button {
-      background: none;
-      border: none;
-      font-family: var(--font-body);
-      font-size: var(--text-sm);
-      color: var(--color-text-soft);
-      cursor: pointer;
-      padding: var(--space-1) 0;
-      text-align: left;
-      transition: color var(--t-fast) var(--ease-out);
-      display: flex;
-      align-items: center;
-      gap: var(--space-2);
-    }
-
-    .filter-item button:hover,
-    .filter-item button.active {
-      color: var(--color-ink);
-    }
-
-    .filter-item button.active::before {
-      content: '';
-      display: inline-block;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--color-rose);
-      flex-shrink: 0;
-    }
-
-    /* Price range */
-    .price-range {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-3);
-    }
-
-    .price-inputs {
-      display: flex;
-      align-items: center;
-      gap: var(--space-2);
-    }
-
-    .price-input {
-      flex: 1;
-      padding: var(--space-2) var(--space-3);
-      border: 1.5px solid var(--color-border);
-      border-radius: var(--radius-md);
-      font-family: var(--font-body);
-      font-size: var(--text-sm);
-      color: var(--color-ink);
-      background: var(--color-cream);
-      width: 0;
-    }
-    .price-input:focus { outline: none; border-color: var(--color-rose); }
-
-    .price-sep { color: var(--color-text-muted); font-size: var(--text-sm); }
-
-    .price-apply {
-      padding: var(--space-2) var(--space-4);
-      background: var(--color-ink);
-      color: var(--color-cream);
-      border: none;
-      border-radius: var(--radius-sm);
-      font-family: var(--font-body);
-      font-size: var(--text-xs);
-      font-weight: 600;
-      cursor: pointer;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    /* ── Main ── */
-    .catalog-main {}
-
-    .catalog-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: var(--space-8);
-      padding-bottom: var(--space-6);
-      border-bottom: 1px solid var(--color-border);
-    }
-
-    .catalog-title {
-      font-family: var(--font-display);
-      font-size: var(--text-2xl);
-      color: var(--color-ink);
-      font-weight: 400;
-    }
-
-    .catalog-meta {
-      display: flex;
-      align-items: center;
-      gap: var(--space-6);
-    }
-
-    .catalog-count {
-      font-size: var(--text-sm);
-      color: var(--color-text-soft);
-    }
-
-    .catalog-sort {
-      display: flex;
-      align-items: center;
-      gap: var(--space-3);
-      font-size: var(--text-sm);
-      color: var(--color-text-soft);
-      position: relative;
-    }
-
-    /* Скрываем нативный select */
-    .sort-select {
-      position: absolute;
-      opacity: 0;
-      pointer-events: none;
-      width: 0;
-      height: 0;
-    }
-
-    /* Кастомный дропдаун */
-    .sort-custom {
-      position: relative;
-      display: inline-block;
-    }
-
-    .sort-trigger {
-      display: flex;
-      align-items: center;
-      gap: var(--space-2);
-      padding: 6px 12px;
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-md);
-      background: var(--color-surface);
-      font-family: var(--font-body);
-      font-size: var(--text-sm);
-      color: var(--color-ink);
-      cursor: pointer;
-      user-select: none;
-      transition: border-color var(--t-base) var(--ease-out),
-                  background var(--t-base) var(--ease-out);
-      white-space: nowrap;
-    }
-    .sort-trigger:hover { border-color: var(--color-rose); }
-    .sort-trigger svg {
-      flex-shrink: 0;
-      transition: transform var(--t-base) var(--ease-out);
-      color: var(--color-text-soft);
-    }
-    .sort-custom.open .sort-trigger svg { transform: rotate(180deg); }
-    .sort-custom.open .sort-trigger { border-color: var(--color-rose); }
-
-    .sort-dropdown {
-      position: absolute;
-      top: calc(100% + 6px);
-      right: 0;
-      min-width: 160px;
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-lg);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-      overflow: hidden;
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(-6px);
-      transition: opacity var(--t-base) var(--ease-out),
-                  transform var(--t-base) var(--ease-out);
-      z-index: 50;
-    }
-    .sort-custom.open .sort-dropdown {
-      opacity: 1;
-      pointer-events: all;
-      transform: translateY(0);
-    }
-
-    .sort-option {
-      display: block;
-      width: 100%;
-      padding: 10px 16px;
-      font-family: var(--font-body);
-      font-size: var(--text-sm);
-      color: var(--color-text);
-      background: none;
-      border: none;
-      text-align: left;
-      cursor: pointer;
-      transition: background var(--t-fast) var(--ease-out),
-                  color var(--t-fast) var(--ease-out);
-    }
-    .sort-option:hover { background: var(--color-cream); color: var(--color-ink); }
-    .sort-option.active { color: var(--color-rose); font-weight: 600; }
-
-    .catalog-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--space-6) var(--space-4);
-    }
-
-    /* Active filters */
-    .active-filters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-2);
-      margin-bottom: var(--space-6);
-    }
-
-    .active-filter-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-2);
-      padding: var(--space-1) var(--space-3);
-      background: var(--color-rose-light);
-      border-radius: 100px;
-      font-size: var(--text-xs);
-      color: var(--color-ink);
-      font-weight: 600;
-    }
-
-    .active-filter-tag button {
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: var(--color-rose-deep);
-      font-size: 0.9rem;
-      line-height: 1;
-      padding: 0;
-    }
-
-    /* Empty/loading */
-    .catalog-empty {
-      grid-column: 1 / -1;
-      text-align: center;
-      padding: var(--space-24) var(--space-8);
-      color: var(--color-text-soft);
-    }
-
-    .catalog-empty p { font-size: var(--text-md); margin-bottom: var(--space-4); }
-
-    /* Mobile filters toggle */
-    .mobile-filter-btn {
-      display: none;
-      align-items: center;
-      gap: var(--space-2);
-      padding: var(--space-2) var(--space-4);
-      background: var(--color-cream-dark);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-md);
-      font-family: var(--font-body);
-      font-size: var(--text-sm);
-      color: var(--color-ink);
-      cursor: pointer;
-    }
-
-    @media (max-width: 900px) {
-      .catalog-layout { grid-template-columns: 1fr; padding: var(--space-6) var(--space-4); gap: var(--space-6); }
-      .catalog-sidebar { position: static; display: none; }
-      .catalog-sidebar.open { display: block; margin-bottom: var(--space-6); }
-      .mobile-filter-btn { display: inline-flex; }
-      .catalog-grid { grid-template-columns: repeat(2, 1fr); }
-
-      .catalog-top {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: var(--space-3);
-        margin-bottom: var(--space-6);
-      }
-
-      .catalog-meta {
-        width: 100%;
-        flex-wrap: wrap;
-        gap: var(--space-3);
-      }
-
-      .catalog-title {
-        font-size: var(--text-xl);
-      }
-    }
-
-    @media (max-width: 480px) {
-      .catalog-layout { padding: var(--space-4) var(--space-3); }
-      .catalog-grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-3) var(--space-2); }
-
-      .catalog-top {
-        margin-bottom: var(--space-4);
-        padding-bottom: var(--space-4);
-      }
-
-      .catalog-meta {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: var(--space-2);
-      }
-
-      .mobile-filter-btn {
-        width: 100%;
-        justify-content: center;
-      }
-    }
-  </style>
 </head>
 <body>
 
@@ -733,6 +394,251 @@
   </div>
 
   <script src="js/script.js"></script>
+  <script src="js/supabase.js"></script>
+  <script>
+
+const SUPABASE_URL = 'https://acylsytogrgyesrcbthx.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_sTp-NwKK2dqaMjjMDcqDsA_HSl45kVD';
+
+let allProducts = [];
+let activeFilters = { cat: 'all', stock: 'all', priceMin: null, priceMax: null };
+
+// ── Загрузка товаров из базы данных Supabase ───────────
+async function loadProducts() {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/products?order=created_at.desc`, {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+    });
+    allProducts = await res.json();
+    renderProducts();
+  } catch {
+    const grid = document.getElementById('catalog-grid');
+    if (grid) {
+      grid.innerHTML = '<div class="catalog-empty"><p>Не удалось загрузить товары. Проверьте соединение.</p></div>';
+    }
+  }
+}
+
+function renderProducts() {
+  let products = allProducts.filter(p => {
+    if (activeFilters.cat !== 'all' && p.category !== activeFilters.cat) return false;
+    if (activeFilters.stock === 'in' && !p.in_stock) return false;
+    if (activeFilters.priceMin && p.price < activeFilters.priceMin) return false;
+    if (activeFilters.priceMax && p.price > activeFilters.priceMax) return false;
+    return true;
+  });
+
+  // Сортировка по значению
+  const sort = document.getElementById('sort-select').value;
+  if (sort === 'price-asc') products.sort((a, b) => a.price - b.price);
+  if (sort === 'price-desc') products.sort((a, b) => b.price - a.price);
+
+  // Корректное склонение числительных для товаров
+  const n = products.length;
+  const countEl = document.getElementById('catalog-count');
+  if (countEl) {
+    countEl.textContent = `${n} ${n === 1 ? 'товар' : n > 1 && n < 5 ? 'товара' : 'товаров'}`;
+  }
+
+  const grid = document.getElementById('catalog-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  if (products.length === 0) {
+    grid.innerHTML = '<div class="catalog-empty"><p>Ничего не найдено</p><p style="font-size:.85rem">Попробуйте изменить параметры фильтров</p></div>';
+    return;
+  }
+
+  products.forEach((p, i) => {
+    const card = document.createElement('article');
+    card.className = 'product-card reveal';
+    card.dataset.delay = i % 3;
+    const price = Number(p.price).toLocaleString('ru-RU');
+    const oldPrice = p.old_price ? `<span class="product-old-price">${Number(p.old_price).toLocaleString('ru-RU')} ₽</span>` : '';
+    const badge = p.old_price ? `<div class="product-badge product-badge--sale">−${Math.round((1 - p.price/p.old_price)*100)}%</div>` : (!p.in_stock ? `<div class="product-badge" style="background:#555;">Нет в наличии</div>` : '');
+    const imgStyle = p.image_url ? `background-image:url('${escHtml(p.image_url)}');background-size:cover;background-position:center;` : '';
+
+    card.innerHTML = `
+      <div class="product-img-wrap">
+        <div class="product-img" style="${imgStyle}"></div>
+        <div class="product-actions">
+          <button class="wishlist-btn" aria-label="В избранное">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+          </button>
+          <button class="quick-add-btn" data-id="${escHtml(p.id)}" data-name="${escHtml(p.name)}" data-price="${escHtml(p.price)}" data-img="${escHtml(p.image_url || '')}">Быстрый заказ</button>
+        </div>
+        ${badge}
+      </div>
+      <div class="product-info">
+        <p class="product-brand">Aura Pink</p>
+        <h3 class="product-name">${escHtml(p.name)}</h3>
+        <p class="product-material">${p.description ? escHtml(p.description.substring(0, 60)) + (p.description.length > 60 ? '...' : '') : ''}</p>
+        <div class="product-footer">
+          <span class="product-price">${price} ₽ ${oldPrice}</span>
+        </div>
+      </div>`;
+    grid.appendChild(card);
+  });
+
+  // Перезапускаем анимации плавного появления
+  setTimeout(() => {
+    document.querySelectorAll('.reveal').forEach((el, i) => {
+      setTimeout(() => el.classList.add('is-visible'), i * 60);
+    });
+  }, 50);
+}
+
+// ── Управление категориями ──────────────────────────
+document.querySelectorAll('[data-cat]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-cat]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilters.cat = btn.dataset.cat;
+    renderProducts();
+    updateActiveFilterTags();
+  });
+});
+
+const urlCat = new URLSearchParams(location.search).get('cat');
+if (urlCat) {
+  const btn = document.querySelector(`[data-cat="${urlCat}"]`);
+  if (btn) { btn.click(); }
+}
+
+// ── Управление фильтром наличия ─────────────────────
+document.querySelectorAll('[data-stock]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-stock]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilters.stock = btn.dataset.stock;
+    renderProducts();
+  });
+});
+
+// ── Применение фильтра цены ────────────────────────
+document.getElementById('price-apply').addEventListener('click', () => {
+  activeFilters.priceMin = parseFloat(document.getElementById('price-min').value) || null;
+  activeFilters.priceMax = parseFloat(document.getElementById('price-max').value) || null;
+  renderProducts();
+  updateActiveFilterTags();
+});
+
+// ── Теги активных фильтров ──────────────────────────
+const catLabels = { dress:'Платья', suit:'Костюмы', blouse:'Блузы', skirt:'Юбки', hoodie:'Худи и толстовки', tshirt:'Футболки и топы', other:'Другое' };
+
+function updateActiveFilterTags() {
+  const wrap = document.getElementById('active-filters');
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  if (activeFilters.cat !== 'all') {
+    const tag = document.createElement('span');
+    tag.className = 'active-filter-tag';
+    tag.textContent = catLabels[activeFilters.cat] || activeFilters.cat;
+    const btnCat = document.createElement('button');
+    btnCat.textContent = '×';
+    btnCat.onclick = clearCat;
+    tag.appendChild(btnCat);
+    wrap.appendChild(tag);
+  }
+  if (activeFilters.priceMin || activeFilters.priceMax) {
+    const tag = document.createElement('span');
+    tag.className = 'active-filter-tag';
+    const min = activeFilters.priceMin ? activeFilters.priceMin.toLocaleString('ru-RU') : '0';
+    const max = activeFilters.priceMax ? activeFilters.priceMax.toLocaleString('ru-RU') : '∞';
+    tag.textContent = `${min} — ${max} ₽`;
+    const btnPrice = document.createElement('button');
+    btnPrice.textContent = '×';
+    btnPrice.onclick = clearPrice;
+    tag.appendChild(btnPrice);
+    wrap.appendChild(tag);
+  }
+}
+
+window.clearCat = () => {
+  activeFilters.cat = 'all';
+  document.querySelectorAll('[data-cat]').forEach(b => b.classList.remove('active'));
+  document.querySelector('[data-cat="all"]').classList.add('active');
+  renderProducts(); updateActiveFilterTags();
+};
+
+window.clearPrice = () => {
+  activeFilters.priceMin = null; activeFilters.priceMax = null;
+  document.getElementById('price-min').value = '';
+  document.getElementById('price-max').value = '';
+  renderProducts(); updateActiveFilterTags();
+};
+
+document.getElementById('sort-select').addEventListener('change', renderProducts);
+
+// ── Мобильный фильтр Toggle ────────────────────────
+document.getElementById('mobile-filter-btn').addEventListener('click', () => {
+  document.getElementById('catalog-sidebar').classList.toggle('open');
+});
+
+loadProducts();
+  
+
+// ── Back to Top Button Controller ─────────────────
+const _btt = document.getElementById('back-to-top');
+if (_btt) {
+  window.addEventListener('scroll', () => {
+    _btt.classList.toggle('visible', window.scrollY > 300);
+  }, { passive: true });
+  _btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+}
+  
+
+/* ── Header layout switcher ──────────────────────────
+   Синхронизация двухрядного хедера на планшетах и в ПК-режиме
+─────────────────────────────────────────────────────── */
+(function() {
+  var header = document.getElementById('site-header');
+  function checkLayout() {
+    var w = window.innerWidth;
+    if (w >= 769 && w <= 1050) {
+      header.classList.add('header-two-row');
+      document.documentElement.style.setProperty('--header-h', '100px');
+    } else {
+      header.classList.remove('header-two-row');
+      document.documentElement.style.removeProperty('--header-h');
+    }
+  }
+  checkLayout();
+  window.addEventListener('resize', checkLayout);
+})();
+  
+
+// ── Кастомная сортировка ──
+(function() {
+  var custom = document.getElementById('sort-custom');
+  var trigger = document.getElementById('sort-trigger');
+  var label = document.getElementById('sort-label');
+  var select = document.getElementById('sort-select');
+  var options = custom.querySelectorAll('.sort-option');
+
+  trigger.addEventListener('click', function(e) {
+    e.stopPropagation();
+    custom.classList.toggle('open');
+  });
+
+  options.forEach(function(opt) {
+    opt.addEventListener('click', function() {
+      var val = opt.dataset.value;
+      label.textContent = opt.textContent;
+      select.value = val;
+      options.forEach(function(o) { o.classList.remove('active'); });
+      opt.classList.add('active');
+      custom.classList.remove('open');
+      select.dispatchEvent(new Event('change'));
+    });
+  });
+
+  document.addEventListener('click', function() {
+    custom.classList.remove('open');
+  });
+})();
+  
+  </script>
   <script>
     const SUPABASE_URL = 'https://acylsytogrgyesrcbthx.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_sTp-NwKK2dqaMjjMDcqDsA_HSl45kVD';
@@ -790,20 +696,24 @@
         const imgStyle = p.image_url ? `background-image:url('${escHtml(p.image_url)}');background-size:cover;background-position:center;` : '';
 
         card.innerHTML = `
-          <a href="product.html?id=${escHtml(p.id)}" class="product-card-link" aria-label="${escHtml(p.name)}">
-            <div class="product-img-wrap">
-              <div class="product-img" style="${imgStyle}"></div>
-              ${badge}
+          <div class="product-img-wrap">
+            <div class="product-img" style="${imgStyle}"></div>
+            <div class="product-actions">
+              <button class="wishlist-btn" aria-label="В избранное">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+              </button>
+              <button class="quick-add-btn" data-id="${escHtml(p.id)}" data-name="${escHtml(p.name)}" data-price="${escHtml(p.price)}" data-img="${escHtml(p.image_url || '')}">Быстрый заказ</button>
             </div>
-            <div class="product-info">
-              <p class="product-brand">Aura Pink</p>
-              <h3 class="product-name">${escHtml(p.name)}</h3>
-              <p class="product-material">${p.description ? escHtml(p.description.substring(0, 60)) + (p.description.length > 60 ? '...' : '') : ''}</p>
-              <div class="product-footer">
-                <span class="product-price">${price} ₽ ${oldPrice}</span>
-              </div>
+            ${badge}
+          </div>
+          <div class="product-info">
+            <p class="product-brand">Aura Pink</p>
+            <h3 class="product-name">${escHtml(p.name)}</h3>
+            <p class="product-material">${p.description ? escHtml(p.description.substring(0, 60)) + (p.description.length > 60 ? '...' : '') : ''}</p>
+            <div class="product-footer">
+              <span class="product-price">${price} ₽ ${oldPrice}</span>
             </div>
-          </a>`;
+          </div>`;
         grid.appendChild(card);
       });
 
