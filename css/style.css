@@ -97,6 +97,9 @@ body {
   background-color: var(--color-bg);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 img, video { display: block; max-width: 100%; }
@@ -1237,6 +1240,8 @@ input, button { font-family: inherit; }
 .site-footer {
   background: var(--color-ink);
   color: var(--color-cream);
+  margin-top: auto;
+  flex-shrink: 0;
 }
 
 .footer-inner {
